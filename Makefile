@@ -19,6 +19,7 @@ install:
 	brew analytics regenerate-uuid
 	brew install $(formulae)
 	npm install -g create-react-app
+	npm install
 
 upgrade:
 	brew update
@@ -26,3 +27,10 @@ upgrade:
 	brew cleanup
 	-heroku update
 	npm install -g npm
+	npm prune
+	-npm outdated
+	npm update --save-dev
+	npm update --save
+	-npm outdated
+	git status
+	git diff
