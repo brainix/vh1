@@ -7,7 +7,7 @@
 
 
 
-install upgrade: formulae := {node}
+install upgrade: formulae := {node,heroku}
 
 
 
@@ -24,4 +24,5 @@ upgrade:
 	brew update
 	-brew upgrade $(formulae)
 	brew cleanup
+	-heroku update
 	npm install -g npm
