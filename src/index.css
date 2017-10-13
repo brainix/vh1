@@ -1,5 +1,58 @@
+/*---------------------------------------------------------------------------*\
+ |  index.css                                                                |
+ |                                                                           |
+ |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
+ |                                                                           |
+ |      This program is free software: you can redistribute it and/or modify |
+ |      it under the terms of the GNU General Public License as published by |
+ |      the Free Software Foundation, either version 3 of the License, or    |
+ |      (at your option) any later version.                                  |
+ |                                                                           |
+ |      This program is distributed in the hope that it will be useful, but  |
+ |      WITHOUT ANY WARRANTY; without even the implied warranty of           |
+ |      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU    |
+ |      General Public License for more details.                             |
+ |                                                                           |
+ |      You should have received a copy of the GNU General Public License    |
+ |      along with this program.  If not, see:                               |
+ |          <http://www.gnu.org/licenses/>                                   |
+\*---------------------------------------------------------------------------*/
+
+/* Inline http://fonts.googleapis.com/css?family=Lato:300,400,700 */
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Lato Light"), local("Lato-Light"), url("https://themes.googleusercontent.com/static/fonts/lato/v7/nj47mAZe0mYUIySgfn0wpQ.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Lato Regular"), local("Lato-Regular"), url("https://themes.googleusercontent.com/static/fonts/lato/v7/v0SdcGFAl2aezM9Vq_aFTQ.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Lato Bold"), local("Lato-Bold"), url("https://themes.googleusercontent.com/static/fonts/lato/v7/DvlFBScY1r-FMtZSYIYoYw.ttf") format("truetype");
+}
+
 body {
   margin: 0;
+  border: 0;
   padding: 0;
-  font-family: sans-serif;
+  background: black;
+  color: white;
+  font: 24px "Lato", sans-serif;
+  text-transform: lowercase;
+}
+
+a {
+  color: white;
+}
+
+em {
+  font-style: normal;
+  font-weight: 700;
 }
