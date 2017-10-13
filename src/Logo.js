@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.test.js                                                              |
+ |  Logo.js                                                                  |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -19,10 +19,23 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { Link } from 'react-router-dom';
+import src from './logo.png';
+import './Logo.css';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-});
+const Logo = (props) => {
+  let linkTo, alt;
+  if (props.location.pathname === '/wtf') {
+    [linkTo, alt] = ['/', 'Home'];
+  } else {
+    [linkTo, alt] = ['/wtf', 'WTF?'];
+  }
+
+  return (
+    <Link className="Logo" to={linkTo}>
+      <img src={src} alt={alt} title={alt} />
+    </Link>
+  );
+};
+
+export default Logo;

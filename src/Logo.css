@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.test.js                                                              |
+ |  Logo.css                                                                 |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -18,11 +18,13 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+.Logo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 24px;
+}
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-});
+.Logo img {
+  height: 72px;
+}

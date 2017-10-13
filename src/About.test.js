@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.test.js                                                              |
+ |  About.test.js                                                            |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -20,9 +20,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import About from './About';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<About />, div);
 });

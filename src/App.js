@@ -19,10 +19,16 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import About from './About';
+import Logo from './Logo';
 
 const App = () => (
   <Router>
+    <div>
+      <Route exact path="/wtf" component={About} />
+      <Route component={Logo} />
+    </div>
   </Router>
 );
 

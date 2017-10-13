@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.test.js                                                              |
+ |  About.css                                                                |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -18,11 +18,36 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+.About {
+  position: relative;
+  margin: 24px;
+}
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-});
+.About h1, .About h2 {
+  margin: 0 0 48px;
+  width: 768px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 64px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.About h2 {
+  margin-bottom: 24px;
+  font-size: 32px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.About p {
+  margin: 0 0 48px;
+  max-width: 640px;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.About p:last-of-type {
+  margin: 0;
+}
