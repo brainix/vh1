@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  Search.test.js                                                           |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -19,22 +19,10 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+import ReactDOM from 'react-dom';
+import Search from './Search';
 
-const App = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </div>
-  </Router>
-);
-
-export default App;
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<Search />, div);
+});
