@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  monkey.js                                                                |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -18,23 +18,32 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+/* eslint no-extend-native: ["error", {"exceptions": ["String", "Array"]}] */
 
-const App = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </div>
-  </Router>
-);
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
-export default App;
+String.prototype.trimAll = function () {
+  return this.trim()
+    .replace(/\s+/g, ' ');
+};
+
+String.prototype.htmlToText = function () {
+  return this.replace(/<[^>]*\/?>/g, '')    // HTML open and self-closing tags
+    .replace(/<\/[a-z]*>/ig, '')            // HTML close tags
+    // eslint-disable-next-line
+    .replace(/\&mdash;/ig, '-');
+};
+
+Array.prototype.choice = function () {
+  return this[Math.floor(Math.random() * this.length)];
+};
+
+Array.prototype.shuffle = function () {
+  for (let current = this.length - 1; current > 0; current--) {
+    let random = Math.floor(Math.random() * (current + 1));
+    [this[current], this[random]] = [this[random], this[current]];
+  }
+  return this;
+};

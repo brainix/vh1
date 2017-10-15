@@ -20,6 +20,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Player from './Player';
 import './About.css';
 
 class About extends React.PureComponent {
@@ -29,31 +30,34 @@ class About extends React.PureComponent {
 
   render() {
     return (
-      <section className="About">
-        <h1>About Me</h1>
+      <div>
+        <Player state='background' />
+        <section className="About">
+          <h1>About Me</h1>
 
-        <h2>What is Spool?</h2>
-        <p>
-          <Link to='/'>Spool</Link> takes the experience of channel surfing and
-          puts it online.  I hope that you enjoy using it as much as I&rsquo;ve
-          enjoyed building it.
-        </p>
+          <h2>What is Spool?</h2>
+          <p>
+            <Link to='/'>Spool</Link> takes the experience of channel surfing and
+            puts it online.  I hope that you enjoy using it as much as I&rsquo;ve
+            enjoyed building it.
+          </p>
 
-        <h2>Just &hellip; Why?</h2>
-        <p>
-          I want to build something frivolous, but in a particular way.
-          Inexplicable like <small>MTV</small>, Twitter, or Snapchat.
-        </p>
+          <h2>Just &hellip; Why?</h2>
+          <p>
+            I want to build something frivolous, but in a particular way.
+            Inexplicable like <small>MTV</small>, Twitter, or Snapchat.
+          </p>
 
-        <h2>How can I contact you?</h2>
-        <p>
-          Find me on Twitter
-          (<a href='https://twitter.com/brainix'>@brainix</a>),
-          email me
-          (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
-          or have coffee with me any time in San Francisco.
-        </p>
-      </section>
+          <h2>How can I contact you?</h2>
+          <p>
+            Find me on Twitter
+            (<a href='https://twitter.com/brainix'>@brainix</a>),
+            email me
+            (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
+            or have coffee with me any time in San Francisco.
+          </p>
+        </section>
+      </div>
     );
   }
 }

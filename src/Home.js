@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  Home.js                                                                  |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -19,22 +19,36 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+import Player from './Player';
+import Search from './Search';
 
-const App = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </div>
-  </Router>
-);
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.resetSearch = this.resetSearch.bind(this);
+    this.state = {
+      query: this.props.query || '',
+      results: this.props.results || [],
+    }
+  }
 
-export default App;
+  resetSearch() {
+    this.setState({query: '', results: []});
+  }
+
+  render() {
+    return (
+      <div>
+        <Player
+          state='playing'
+          artistId={this.props.match.params.artistId}
+          songId={this.props.match.params.songId}
+          resetSearch={this.resetSearch}
+        />
+        <Search query={this.state.query} results={this.state.results} />
+      </div>
+    );
+  }
+}
+
+export default Home;

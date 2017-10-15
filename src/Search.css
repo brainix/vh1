@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  Search.css                                                               |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -18,23 +18,72 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+.Search {
+  position: relative;
+  margin: 24px;
+  width: 20em;
+  font-weight: 300;
+}
 
-const App = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </div>
-  </Router>
-);
+.Search fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
 
-export default App;
+.Search input {
+  -webkit-appearance: none !important;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 4px 8px;
+  width: 6em;
+  background: transparent;
+  color: white;
+  line-height: 1.25;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: lowercase;
+  transition: all 0.2s ease 0s;
+}
+
+.Search input::-webkit-input-placeholder {
+  font-weight: 300;
+}
+
+.Search input::-moz-placeholder {
+  font-weight: 300;
+}
+
+.Search input::-ms-input-placeholder {
+  font-weight: 300;
+}
+
+.Search input:focus {
+  outline: 0;
+  width: 20em;
+}
+
+.Search ol {
+  padding: 0 9px;
+}
+
+.Search li {
+  margin: 0.5em 0;
+  list-style-type: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+
+.Search li:last-of-type {
+  margin: 0;
+}
+
+.Search a {
+  text-decoration: none;
+}
+
+.Search a:hover {
+  text-decoration: underline;
+}
