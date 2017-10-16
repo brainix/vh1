@@ -1,0 +1,4 @@
+{
+  "root": "build/",
+  "error_page": "index.html"
+}
