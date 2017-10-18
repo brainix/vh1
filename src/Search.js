@@ -154,6 +154,12 @@ class Input extends React.PureComponent {
         .then(response => response.json())
         .then(data => this.props.updateState({results: data.songs}))
         .catch(error => console.log(error));
+      const formData = new FormData();
+      formData.append('q', query);
+      fetch('//api.spool.video/v1/queries', {method: 'POST', body: formData})
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
     } else {
       this.props.updateState({results: []});
     }
