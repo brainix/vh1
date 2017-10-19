@@ -78,7 +78,7 @@ class Precache extends React.PureComponent {
     fetch(`${process.env.REACT_APP_API}/queries`)
       .then(response => response.json())
       .then(data => this.cacheQueries(data.queries))
-      .catch(error => console.log(error));
+      .catch(console.log);
   }
 
   cacheQueries(queries) {
@@ -159,11 +159,11 @@ class Input extends React.PureComponent {
       fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(response => response.json())
         .then(data => this.props.updateState({results: data.songs}))
-        .catch(error => console.log(error));
+        .catch(console.log);
       const formData = new FormData();
       formData.append('q', query);
       fetch(`${process.env.REACT_APP_API}/queries`, {method: 'POST', body: formData})
-        .catch(error => console.log(error));
+        .catch(console.log);
     } else {
       this.props.updateState({results: []});
     }

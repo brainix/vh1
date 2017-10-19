@@ -90,7 +90,7 @@ class Buffer extends React.Component {
             this.videos = [data.songs[0]];
             this.moreVideos(true);
           })
-          .catch(error => console.log(error));
+          .catch(console.log);
       } else {
         this.moreVideos(true);
       }
@@ -106,7 +106,7 @@ class Buffer extends React.Component {
           this.setState({index: 0});
         }
       })
-      .catch(error => console.log(error));
+      .catch(console.log);
   }
 
   nextVideo() {
