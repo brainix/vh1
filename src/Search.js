@@ -163,8 +163,6 @@ class Input extends React.PureComponent {
       const formData = new FormData();
       formData.append('q', query);
       fetch(`${process.env.REACT_APP_API}/queries`, {method: 'POST', body: formData})
-        .then(response => response.json())
-        .then(data => console.log(data))
         .catch(error => console.log(error));
     } else {
       this.props.updateState({results: []});
