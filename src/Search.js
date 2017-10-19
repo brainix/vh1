@@ -103,6 +103,7 @@ class Input extends React.PureComponent {
   constructor(props) {
     super(props);
     this.GTFO_KEYS = [27];
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
@@ -112,6 +113,7 @@ class Input extends React.PureComponent {
   }
 
   componentDidMount() {
+    document.addEventListener('keydown', this.onKeyDown);
     document.addEventListener('keypress', this.onKeyPress);
     this.input = document.querySelectorAll('input[type=search]')[0];
   }
@@ -122,12 +124,16 @@ class Input extends React.PureComponent {
     }
   }
 
+  onKeyDown(eventObject) {
+    if (document.activeElement !== this.input && this.GTFO_KEYS.includes(eventObject.which)) {
+      window.location.href = '/gtfo';
+    }
+  }
+
   onKeyPress(eventObject) {
     const c = String.fromCharCode(eventObject.which);
     if (c && /^[0-9a-z]+$/i.test(c) && document.activeElement !== this.input) {
       this.input.focus();
-    } else if (this.GTFO_KEYS.includes(eventObject.which)) {
-      window.location = `${process.env.API || '//localhost:5000/v1'}/gtfo`;
     }
   }
 
