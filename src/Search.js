@@ -75,7 +75,7 @@ class Precache extends React.PureComponent {
   }
 
   getQueries() {
-    fetch('//api.spool.video/v1/queries')
+    fetch(`${process.env.REACT_APP_API}/queries`)
       .then(response => response.json())
       .then(data => this.cacheQueries(data.queries))
       .catch(error => console.log(error));
@@ -85,7 +85,7 @@ class Precache extends React.PureComponent {
     if (queries.length) {
       const query = queries.shift();
       const urlQueryString = querystring.stringify({q: query});
-      fetch(`//api.spool.video/v1/songs/search?${urlQueryString}`)
+      fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(() => this.cacheQueries(queries))
         .catch(error => {
           console.log(error);
@@ -150,13 +150,13 @@ class Input extends React.PureComponent {
     this.props.updateState({query: query});
     if (query) {
       const urlQueryString = querystring.stringify({q: query});
-      fetch(`//api.spool.video/v1/songs/search?${urlQueryString}`)
+      fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(response => response.json())
         .then(data => this.props.updateState({results: data.songs}))
         .catch(error => console.log(error));
       const formData = new FormData();
       formData.append('q', query);
-      fetch('//api.spool.video/v1/queries', {method: 'POST', body: formData})
+      fetch(`${process.env.REACT_APP_API}/queries`, {method: 'POST', body: formData})
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.log(error));
