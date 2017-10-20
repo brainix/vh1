@@ -141,9 +141,9 @@ class Input extends React.PureComponent {
   }
 
   onFocus() {
-    const videos = document.getElementsByClassName('Playing');
-    if (videos.length) {
-      this.video = videos[0];
+    const video = document.getElementsByClassName('Playing')[0];
+    if (video) {
+      this.video = video;
       this.video.classList.remove('Playing');
     }
   }
