@@ -83,7 +83,7 @@ class Buffer extends React.Component {
   initVideos() {
     if (this.videos.length === 0) {
       if (this.props.artistId && this.props.songId) {
-        const {artistId, songId} = this.props;
+        const { artistId, songId } = this.props;
         fetch(`${process.env.REACT_APP_API}/artists/${artistId}/songs/${songId}`)
           .then(response => response.json())
           .then(data => {
@@ -183,7 +183,7 @@ class Video extends React.PureComponent {
 
   updateUrlAndTitle() {
     if (this.props.state === 'playing') {
-      const {artist_id, song_id, artist, song} = this.props.video;
+      const { artist_id, song_id, artist, song } = this.props.video;
       this.props.history.replace(`/${artist_id}/${song_id}`);
       document.title = `Spool - ${artist} - ${song}`;
     }

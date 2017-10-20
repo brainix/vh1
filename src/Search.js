@@ -258,18 +258,18 @@ class Results extends React.PureComponent {
 class Result extends React.PureComponent {
   constructor(props) {
     super(props);
-    const {artist_id, song_id} = this.props.result;
+    const { artist_id, song_id } = this.props.result;
     this.target = `/${artist_id}/${song_id}`;
   }
 
   componentWillReceiveProps(nextProps) {
-    const {artist_id, song_id} = nextProps.result;
+    const { artist_id, song_id } = nextProps.result;
     this.target = `/${artist_id}/${song_id}`;
   }
 
   render() {
     const style = {textDecoration: this.props.selected ? 'underline' : null};
-    const {artist, song} = this.props.result;
+    const { artist, song } = this.props.result;
     const html = `${artist} &mdash; ${song}`;
     const title = html.htmlToText();
     return (
