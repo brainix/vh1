@@ -156,16 +156,16 @@ class Input extends React.PureComponent {
 
   onChange(eventObject) {
     const query = eventObject.target.value;
-    this.props.updateState({ query: query });
+    this.props.updateState({ query });
     if (query) {
       const urlQueryString = querystring.stringify({ q: query });
       fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(response => response.json())
         .then(data => this.props.updateState({ results: data.songs }))
         .catch(console.log);
-      const formData = new FormData();
-      formData.append('q', query);
-      fetch(`${process.env.REACT_APP_API}/queries`, { method: 'POST', body: formData })
+      const [method, body] = ['POST', new FormData()];
+      body.append('q', query);
+      fetch(`${process.env.REACT_APP_API}/queries`, { method, body })
         .catch(console.log);
     } else {
       this.props.updateState({ results: [] });
