@@ -84,7 +84,7 @@ class Precache extends React.PureComponent {
   cacheQueries(queries) {
     if (queries.length) {
       const query = queries.shift();
-      const urlQueryString = querystring.stringify({q: query});
+      const urlQueryString = querystring.stringify({ q: query });
       fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(() => this.cacheQueries(queries))
         .catch(error => {
@@ -156,19 +156,19 @@ class Input extends React.PureComponent {
 
   onChange(eventObject) {
     const query = eventObject.target.value;
-    this.props.updateState({query: query});
+    this.props.updateState({ query: query });
     if (query) {
-      const urlQueryString = querystring.stringify({q: query});
+      const urlQueryString = querystring.stringify({ q: query });
       fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(response => response.json())
-        .then(data => this.props.updateState({results: data.songs}))
+        .then(data => this.props.updateState({ results: data.songs }))
         .catch(console.log);
       const formData = new FormData();
       formData.append('q', query);
-      fetch(`${process.env.REACT_APP_API}/queries`, {method: 'POST', body: formData})
+      fetch(`${process.env.REACT_APP_API}/queries`, { method: 'POST', body: formData })
         .catch(console.log);
     } else {
-      this.props.updateState({results: []});
+      this.props.updateState({ results: [] });
     }
   }
 
@@ -197,7 +197,7 @@ class Results extends React.PureComponent {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
-    this.state = {selected: null};
+    this.state = { selected: null };
   }
 
   componentDidMount() {
@@ -206,7 +206,7 @@ class Results extends React.PureComponent {
   }
 
   componentWillReceiveProps() {
-    this.setState({selected: null});
+    this.setState({ selected: null });
   }
 
   onKeyDown(eventObject) {
@@ -236,7 +236,7 @@ class Results extends React.PureComponent {
     selected += direction;
     selected += this.props.results.length;
     selected %= this.props.results.length;
-    this.setState({selected: selected});
+    this.setState({ selected: selected });
   }
 
   redirect() {
@@ -274,7 +274,7 @@ class Result extends React.PureComponent {
   }
 
   render() {
-    const style = {textDecoration: this.props.selected ? 'underline' : null};
+    const style = { textDecoration: this.props.selected ? 'underline' : null };
     const { artist, song } = this.props.result;
     const html = `${artist} &mdash; ${song}`;
     const title = html.htmlToText();
@@ -283,7 +283,7 @@ class Result extends React.PureComponent {
         <Link
           to={this.target}
           style={style}
-          dangerouslySetInnerHTML={{__html: html}}
+          dangerouslySetInnerHTML={{ __html: html }}
           title={title}
         />
       </li>

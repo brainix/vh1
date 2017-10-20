@@ -108,7 +108,7 @@ class Buffer extends React.Component {
       .then(data => {
         this.videos = this.videos.concat(data.songs);
         if (init) {
-          this.setState({index: 0});
+          this.setState({ index: 0 });
         }
       })
       .catch(console.log);
@@ -117,7 +117,7 @@ class Buffer extends React.Component {
   nextVideo() {
     if (this.state.index !== null) {
       if (this.state.index < this.videos.length - 1) {
-        this.setState({index: this.state.index + 1});
+        this.setState({ index: this.state.index + 1 });
       }
       if (this.state.index >= this.videos.length - this.BATCH_SIZE / 2) {
         this.moreVideos(false);
@@ -127,7 +127,7 @@ class Buffer extends React.Component {
 
   prevVideo() {
     if (this.state.index !== null && this.state.index > 0) {
-      this.setState({index: this.state.index - 1});
+      this.setState({ index: this.state.index - 1 });
     }
   }
 

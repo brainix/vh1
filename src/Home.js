@@ -33,7 +33,7 @@ class Home extends React.Component {
   }
 
   resetSearch() {
-    this.setState({query: '', results: []});
+    this.setState({ query: '', results: [] });
   }
 
   render() {
