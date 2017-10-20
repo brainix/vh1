@@ -247,8 +247,7 @@ class Results extends React.PureComponent {
 
   render() {
     const items = [];
-    for (let index = 0; index < this.props.results.length; index++) {
-      const result = this.props.results[index];
+    this.props.results.forEach((result, index) => {
       const key = result._id;
       const selected = index === this.state.selected;
       const ref = index === this.state.selected ? 'result' : null;
@@ -256,7 +255,7 @@ class Results extends React.PureComponent {
         <Result key={key} result={result} selected={selected} ref={ref} />
       );
       items.push(item);
-    }
+    });
     return <ol>{items}</ol>;
   }
 }

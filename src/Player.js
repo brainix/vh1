@@ -150,9 +150,8 @@ class Buffer extends React.Component {
       states = ['playing', 'buffering'];
     }
 
-    for (let index = 0; index < states.length; index++) {
+    states.forEach((state, index) => {
       const video = this.videos[this.state.index + index];
-      const state = states[index];
       const key = `/${video.artist_id}/${video.song_id}/${state}`;
       videos.push(
         <Video
@@ -164,7 +163,7 @@ class Buffer extends React.Component {
           history={this.props.history}
         />
       );
-    }
+    });
 
     return <div className="Player">{videos}</div>;
   }
