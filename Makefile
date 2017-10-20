@@ -17,7 +17,7 @@ install:
 		ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	brew analytics off
 	brew analytics regenerate-uuid
-	brew install $(formulae)
+	-brew install $(formulae)
 	npm install -g create-react-app
 	npm install
 
