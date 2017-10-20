@@ -74,9 +74,14 @@ class Buffer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ((this.props.artistId !== prevProps.artistId || this.props.songId !== prevProps.songId) && this.props.history.action !== 'REPLACE') {
-      this.videos = [];
-      this.initVideos();
+    if (
+      this.props.artistId !== prevProps.artistId
+      || this.props.songId !== prevProps.songId
+    ) {
+      if (this.props.history.action !== 'REPLACE') {
+        this.videos = [];
+        this.initVideos();
+      }
     }
   }
 
@@ -129,13 +134,22 @@ class Buffer extends React.Component {
   render() {
     const videos = [];
     let states;
-    if (this.state === null || this.state.index === null || this.state.index > this.videos.length - 1) {
+
+    if (
+      this.state === null
+      || this.state.index === null
+      || this.state.index > this.videos.length - 1
+    ) {
       states = [];
-    } else if (this.state.index === this.videos.length - 1 || this.props.state === 'background') {
+    } else if (
+      this.state.index === this.videos.length - 1
+      || this.props.state === 'background'
+    ) {
       states = [this.props.state];
     } else {
       states = ['playing', 'buffering'];
     }
+
     for (let index = 0; index < states.length; index++) {
       const video = this.videos[this.state.index + index];
       const state = states[index];
@@ -151,6 +165,7 @@ class Buffer extends React.Component {
         />
       );
     }
+
     return <div className="Player">{videos}</div>;
   }
 }

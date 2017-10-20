@@ -125,7 +125,10 @@ class Input extends React.PureComponent {
   }
 
   onKeyDown(eventObject) {
-    if (document.activeElement !== this.input && this.GTFO_KEYS.includes(eventObject.which)) {
+    if (
+      document.activeElement !== this.input
+      && this.GTFO_KEYS.includes(eventObject.which)
+    ) {
       window.location.href = '/gtfo';
     }
   }
@@ -207,7 +210,10 @@ class Results extends React.PureComponent {
   }
 
   onKeyDown(eventObject) {
-    if ((this.props.results.length && this.UP_KEYS.includes(eventObject.which)) || this.DOWN_KEYS.includes(eventObject.which)) {
+    if (
+      this.props.results.length
+      && this.UP_KEYS.concat(this.DOWN_KEYS).includes(eventObject.which)
+    ) {
       eventObject.preventDefault();
     }
   }
