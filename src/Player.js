@@ -106,7 +106,7 @@ class Buffer extends React.Component {
     fetch(`${process.env.REACT_APP_API}/songs`)
       .then(response => response.json())
       .then(data => {
-        this.videos = this.videos.concat(data.songs);
+        this.videos = this.videos.concat(data.songs.shuffle());
         if (init) {
           this.setState({ index: 0 });
         }
