@@ -37,15 +37,27 @@ class Home extends React.Component {
   }
 
   render() {
+    let artistId, songId;
+    if (this.props.match) {
+      artistId = this.props.match.params.artistId;
+      songId = this.props.match.params.songId;
+    } else {
+      [artistId, songId] = [null, null];
+    }
     return (
       <div>
         <Player
           state='playing'
-          artistId={this.props.match.params.artistId}
-          songId={this.props.match.params.songId}
+          artistId={artistId}
+          songId={songId}
           resetSearch={this.resetSearch}
+          history={this.props.history}
         />
-        <Search query={this.state.query} results={this.state.results} />
+        <Search
+          query={this.state.query}
+          results={this.state.results}
+          history={this.props.history}
+        />
       </div>
     );
   }

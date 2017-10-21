@@ -31,7 +31,7 @@ class About extends React.PureComponent {
   render() {
     return (
       <div>
-        <Player state='background' />
+        <Player state='background' history={this.props.history} />
         <section className="About">
           <h1>About Me</h1>
 

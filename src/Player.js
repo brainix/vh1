@@ -19,7 +19,6 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import './Player.css';
 import './monkey';
 
@@ -220,4 +219,4 @@ class Video extends React.PureComponent {
   }
 }
 
-export default withRouter(Player);
+export default Player;

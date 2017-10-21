@@ -19,7 +19,7 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Search.css';
 import './monkey';
 
@@ -290,4 +290,4 @@ class Result extends React.PureComponent {
   }
 }
 
-export default withRouter(Search);
+export default Search;

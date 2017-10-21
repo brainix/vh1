@@ -19,7 +19,12 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  withRouter,
+} from 'react-router-dom';
 import About from './About';
 import Home from './Home';
 import Logo from './Logo';
@@ -28,9 +33,9 @@ const App = () => (
   <Router>
     <div>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
+        <Route exact path="/" component={withRouter(Home)} />
+        <Route path="/:artistId/:songId" component={withRouter(Home)} />
+        <Route exact path="/wtf" component={withRouter(About)} />
       </Switch>
       <Route component={Logo} />
     </div>
