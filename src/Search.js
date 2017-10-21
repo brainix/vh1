@@ -19,7 +19,6 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Search.css';
 import './monkey';
 
@@ -279,8 +278,8 @@ class Result extends React.PureComponent {
     const title = html.htmlToText();
     return (
       <li>
-        <Link
-          to={this.target}
+        <a
+          href={this.target}
           style={style}
           dangerouslySetInnerHTML={{ __html: html }}
           title={title}
