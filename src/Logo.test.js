@@ -18,6 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
+import './requestAnimationFrame';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Logo from './Logo';

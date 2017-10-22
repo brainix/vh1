@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  Player.test.js                                                           |
+ |  requestAnimationFrame.js                                                 |
  |                                                                           |
  |  Copyright © 2017, Rajiv Bakulesh Shah, original author.                  |
  |                                                                           |
@@ -18,12 +18,6 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import './requestAnimationFrame';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Player from './Player';
-
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Player />, div);
-});
+global.requestAnimationFrame = function(callback) {
+  setTimeout(callback, 0);
+};
