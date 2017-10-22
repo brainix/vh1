@@ -44,22 +44,22 @@ class Home extends React.Component {
     } else {
       [artistId, songId] = [null, null];
     }
-    return (
-      <div>
-        <Player
-          state='playing'
-          artistId={artistId}
-          songId={songId}
-          resetSearch={this.resetSearch}
-          history={this.props.history}
-        />
-        <Search
-          query={this.state.query}
-          results={this.state.results}
-          history={this.props.history}
-        />
-      </div>
-    );
+    return [
+      <Player
+        key="player"
+        state="playing"
+        artistId={artistId}
+        songId={songId}
+        resetSearch={this.resetSearch}
+        history={this.props.history}
+      />,
+      <Search
+        key="search"
+        query={this.state.query}
+        results={this.state.results}
+        history={this.props.history}
+      />,
+    ];
   }
 }
 
