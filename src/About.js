@@ -44,12 +44,14 @@ class About extends React.PureComponent {
           <h2>Just &hellip; Why?</h2>
           <p>
             I want to build something frivolous, but in a particular way.
-            Inexplicable like <small>MTV</small>, Twitter, or Snapchat.
+            Inexplicable like <small>MTV</small> or Snapchat.
           </p>
 
           <h2>How can I contact you?</h2>
           <p>
-            Find me on Twitter
+            Find me on reddit
+            (<a href='https://www.reddit.com/user/Brainix'>u/Brainix</a>),
+            Twitter
             (<a href='https://twitter.com/brainix'>@brainix</a>),
             email me
             (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
