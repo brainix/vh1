@@ -27,6 +27,7 @@ upgrade:
 	brew cleanup
 	-heroku update
 	npm install -g npm
+	npm install npm
 	npm prune
 	-npm outdated
 	npm update --save-dev
