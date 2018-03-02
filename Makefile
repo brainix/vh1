@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------#
 #   Makefile                                                                  #
 #                                                                             #
-#   Copyright © 2017, Rajiv Bakulesh Shah, original author.                   #
+#   Copyright © 2017-2018, Rajiv Bakulesh Shah, original author.              #
 #   All rights reserved.                                                      #
 #-----------------------------------------------------------------------------#
 
