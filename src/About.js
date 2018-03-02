@@ -29,7 +29,7 @@ class About extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Player state='background' history={this.props.history} />
         <section className="About">
           <h1>About Me</h1>
@@ -58,7 +58,7 @@ class About extends React.PureComponent {
             or have coffee with me any time in San Francisco.
           </p>
         </section>
-      </div>
+      </React.Fragment>
     );
   }
 }

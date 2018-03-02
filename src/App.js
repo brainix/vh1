@@ -31,14 +31,14 @@ import Logo from './Logo';
 
 const App = () => (
   <Router>
-    <div>
+    <React.Fragment>
       <Switch>
         <Route exact path="/" component={withRouter(Home)} />
         <Route path="/:artistId/:songId" component={withRouter(Home)} />
         <Route exact path="/wtf" component={withRouter(About)} />
       </Switch>
       <Route component={Logo} />
-    </div>
+    </React.Fragment>
   </Router>
 );
 
