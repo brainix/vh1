@@ -51,8 +51,6 @@ class About extends React.PureComponent {
           <p>
             Find me on reddit
             (<a href='https://www.reddit.com/user/Brainix'>u/Brainix</a>),
-            Twitter
-            (<a href='https://twitter.com/brainix'>@brainix</a>),
             email me
             (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
             or have coffee with me any time in San Francisco.
