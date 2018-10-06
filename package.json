@@ -16,7 +16,7 @@
     "eject": "react-scripts eject"
   },
   "engines": {
-    "node": "10.10.0",
+    "node": "10.11.0",
     "npm": "6.4.1"
   }
 }
