@@ -151,7 +151,7 @@ class Buffer extends React.Component {
 
     states.forEach((state, index) => {
       const video = this.videos[this.state.index + index];
-      const key = `/${video.artist_id}/${video.song_id}/${state}`;
+      const key = `/${video.artist__id}/${video.song__id}/${state}`;
       videos.push(
         <Video
           key={key}
@@ -196,8 +196,8 @@ class Video extends React.PureComponent {
 
   updateUrlAndTitle() {
     if (this.props.state === 'playing') {
-      const { artist_id, song_id, artist, song } = this.props.video;
-      this.props.history.replace(`/${artist_id}/${song_id}`);
+      const { artist__id, song__id, artist, song } = this.props.video;
+      this.props.history.replace(`/${artist__id}/${song__id}`);
       document.title = `Spool - ${artist} - ${song}`;
     }
   }

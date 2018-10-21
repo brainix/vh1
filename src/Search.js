@@ -263,13 +263,13 @@ class Results extends React.PureComponent {
 class Result extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { artist_id, song_id } = this.props.result;
-    this.target = `/${artist_id}/${song_id}`;
+    const { artist__id, song__id } = this.props.result;
+    this.target = `/${artist__id}/${song__id}`;
   }
 
   componentWillReceiveProps(nextProps) {
-    const { artist_id, song_id } = nextProps.result;
-    this.target = `/${artist_id}/${song_id}`;
+    const { artist__id, song__id } = nextProps.result;
+    this.target = `/${artist__id}/${song__id}`;
   }
 
   render() {
