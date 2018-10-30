@@ -19,6 +19,7 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Player from './Player';
 import './About.css';
 
@@ -61,4 +62,4 @@ class About extends React.PureComponent {
   }
 }
 
-export default About;
+export default withRouter(About);
