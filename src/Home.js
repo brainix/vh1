@@ -19,7 +19,6 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import Player from './Player';
 import Search from './Search';
 
@@ -64,4 +63,4 @@ class Home extends React.Component {
   }
 }
 
-export default withRouter(Home);
+export default Home;
