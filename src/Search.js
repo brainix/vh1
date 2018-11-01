@@ -195,14 +195,12 @@ class Results extends React.PureComponent {
     this.UP_KEYS = [38];
     this.DOWN_KEYS = [40];
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
     this.state = { selected: null };
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
-    document.addEventListener('keyup', this.onKeyUp);
   }
 
   componentWillReceiveProps() {
@@ -210,20 +208,13 @@ class Results extends React.PureComponent {
   }
 
   onKeyDown(eventObject) {
-    if (
-      this.props.results.length
-      && this.UP_KEYS.concat(this.DOWN_KEYS).includes(eventObject.which)
-    ) {
-      eventObject.preventDefault();
-    }
-  }
-
-  onKeyUp(eventObject) {
     if (this.props.results.length) {
       if (this.UP_KEYS.includes(eventObject.which)) {
         this.updateSelected(-1);
+        eventObject.preventDefault();
       } else if (this.DOWN_KEYS.includes(eventObject.which)) {
         this.updateSelected(1);
+        eventObject.preventDefault();
       }
     }
   }
