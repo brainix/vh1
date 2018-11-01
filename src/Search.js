@@ -260,34 +260,22 @@ class Results extends React.PureComponent {
   }
 }
 
-class Result extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    const { artist__id, song__id } = this.props.result;
-    this.target = `/${artist__id}/${song__id}`;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { artist__id, song__id } = nextProps.result;
-    this.target = `/${artist__id}/${song__id}`;
-  }
-
-  render() {
-    const style = { textDecoration: this.props.selected ? 'underline' : null };
-    const { artist, song } = this.props.result;
-    const html = `${artist} &mdash; ${song}`;
-    const title = html.htmlToText();
-    return (
-      <li>
-        <a
-          href={this.target}
-          style={style}
-          dangerouslySetInnerHTML={{ __html: html }}
-          title={title}
-        />
-      </li>
-    );
-  }
-}
+const Result = React.memo((props) => {
+  const { artist__id, song__id, artist, song } = props.result;
+  const target = `/${artist__id}/${song__id}`;
+  const style = { textDecoration: props.selected ? 'underline' : null };
+  const html = `${artist} &mdash; ${song}`;
+  const title = html.htmlToText();
+  return (
+    <li>
+      <a
+        href={target}
+        style={style}
+        dangerouslySetInnerHTML={{ __html: html }}
+        title={title}
+      />
+    </li>
+  );
+});
 
 export default Search;
