@@ -210,11 +210,11 @@ class Results extends React.PureComponent {
   onKeyDown(eventObject) {
     if (this.props.results.length) {
       if (this.UP_KEYS.includes(eventObject.which)) {
+        eventObject.preventDefault();
         this.updateSelected(-1);
-        eventObject.preventDefault();
       } else if (this.DOWN_KEYS.includes(eventObject.which)) {
-        this.updateSelected(1);
         eventObject.preventDefault();
+        this.updateSelected(1);
       }
     }
   }
@@ -231,8 +231,10 @@ class Results extends React.PureComponent {
   }
 
   redirect() {
-    if (this.refs.result) {
-      this.props.history.push(this.refs.result.target);
+    if (this.props.results && this.state.selected !== null) {
+      const { artist__id, song__id } = this.props.results[this.state.selected];
+      const target = `/${artist__id}/${song__id}`;
+      this.props.history.push(target);
     }
   }
 
