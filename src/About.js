@@ -19,7 +19,7 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Player from './Player';
 import './About.css';
 
@@ -37,8 +37,8 @@ class About extends React.PureComponent {
 
           <h2>What is Spool?</h2>
           <p>
-            <a href='/'>Spool</a> takes the experience of channel surfing and
-            puts it online.  I hope that you enjoy using it as much as
+            <Link to='/'>Spool</Link> takes the experience of channel surfing
+            and puts it online.  I hope that you enjoy using it as much as
             I&rsquo;ve enjoyed building it.
           </p>
 
