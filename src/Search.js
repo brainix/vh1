@@ -20,6 +20,7 @@
 
 import './requestAnimationFrame';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Search.css';
 import './monkey';
 
@@ -261,8 +262,8 @@ const Result = React.memo((props) => {
   const title = html.htmlToText();
   return (
     <li>
-      <a
-        href={target}
+      <Link
+        to={target}
         style={style}
         dangerouslySetInnerHTML={{ __html: html }}
         title={title}
