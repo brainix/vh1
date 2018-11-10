@@ -40,8 +40,7 @@ class Home extends React.Component {
   render() {
     let artistId, songId;
     if (this.props.match) {
-      artistId = this.props.match.params.artistId;
-      songId = this.props.match.params.songId;
+      ({ artistId, songId } = this.props.match.params);
     } else {
       [artistId, songId] = [null, null];
     }
