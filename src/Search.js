@@ -29,8 +29,6 @@ const querystring = require('querystring');
 class Search extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.updateState = this.updateState.bind(this);
     this.state = {
       query: this.props.query || '',
       results: this.props.results || [],
@@ -44,12 +42,12 @@ class Search extends React.PureComponent {
     });
   }
 
-  onSubmit(eventObject) {
+  onSubmit = (eventObject) => {
     eventObject.preventDefault();
     this.refs.results.redirect();
   }
 
-  updateState(nextState) {
+  updateState = (nextState) => {
     this.setState(nextState);
   }
 
@@ -104,11 +102,6 @@ class Input extends React.PureComponent {
   constructor(props) {
     super(props);
     this.GTFO_KEYS = [27];
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.input = null;
     this.video = null;
   }
@@ -125,7 +118,7 @@ class Input extends React.PureComponent {
     }
   }
 
-  onKeyDown(eventObject) {
+  onKeyDown = (eventObject) => {
     if (
       document.activeElement !== this.input
       && this.GTFO_KEYS.includes(eventObject.which)
@@ -134,14 +127,14 @@ class Input extends React.PureComponent {
     }
   }
 
-  onKeyPress(eventObject) {
+  onKeyPress = (eventObject) => {
     const c = String.fromCharCode(eventObject.which);
     if (c && /^[0-9a-z]+$/i.test(c) && document.activeElement !== this.input) {
       this.input.focus();
     }
   }
 
-  onFocus() {
+  onFocus = () => {
     const video = document.getElementsByClassName('Playing')[0];
     if (video) {
       this.video = video;
@@ -149,13 +142,13 @@ class Input extends React.PureComponent {
     }
   }
 
-  onBlur() {
+  onBlur = () => {
     if (this.video) {
       this.video.classList.add('Playing');
     };
   }
 
-  onChange(eventObject) {
+  onChange = (eventObject) => {
     const query = eventObject.target.value;
     this.props.updateState({ query });
     if (query) {
@@ -195,8 +188,6 @@ class Results extends React.PureComponent {
     super(props);
     this.UP_KEYS = [38];
     this.DOWN_KEYS = [40];
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.updateSelected = this.updateSelected.bind(this);
     this.state = { selected: null };
   }
 
@@ -208,7 +199,7 @@ class Results extends React.PureComponent {
     this.setState({ selected: null });
   }
 
-  onKeyDown(eventObject) {
+  onKeyDown = (eventObject) => {
     if (this.props.results.length) {
       if (this.UP_KEYS.includes(eventObject.which)) {
         eventObject.preventDefault();
@@ -220,7 +211,7 @@ class Results extends React.PureComponent {
     }
   }
 
-  updateSelected(direction) {
+  updateSelected = (direction) => {
     let selected = this.state.selected;
     if (selected === null) {
       selected = -0.5 * direction - 0.5;

@@ -27,8 +27,6 @@ class Player extends React.PureComponent {
     super(props);
     this.NEXT_KEYS = [39];
     this.PREV_KEYS = [37];
-    this.onKeyUp = this.onKeyUp.bind(this);
-    this.onVisibilityChange = this.onVisibilityChange.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +34,7 @@ class Player extends React.PureComponent {
     document.addEventListener('visibilitychange', this.onVisibilityChange);
   }
 
-  onKeyUp(eventObject) {
+  onKeyUp = (eventObject) => {
     if (this.refs.buffer && document.activeElement === document.body) {
       if (this.NEXT_KEYS.includes(eventObject.which)) {
         this.refs.buffer.nextVideo();
@@ -46,7 +44,7 @@ class Player extends React.PureComponent {
     }
   }
 
-  onVisibilityChange() {
+  onVisibilityChange = () => {
     const video = document.getElementsByTagName('video')[0];
     if (video) {
       video[document.hidden ? 'pause' : 'play']();
@@ -62,8 +60,6 @@ class Buffer extends React.Component {
   constructor(props) {
     super(props);
     this.BATCH_SIZE = 60;
-    this.nextVideo = this.nextVideo.bind(this);
-    this.prevVideo = this.prevVideo.bind(this);
     this.videos = [];
     this.state = null;
   }
@@ -113,7 +109,7 @@ class Buffer extends React.Component {
       .catch(console.log);
   }
 
-  nextVideo() {
+  nextVideo = () => {
     if (this.state.index !== null) {
       if (this.state.index < this.videos.length - 1) {
         this.setState({ index: this.state.index + 1 });
@@ -124,7 +120,7 @@ class Buffer extends React.Component {
     }
   }
 
-  prevVideo() {
+  prevVideo = () => {
     if (this.state.index !== null && this.state.index > 0) {
       this.setState({ index: this.state.index - 1 });
     }
@@ -171,7 +167,6 @@ class Buffer extends React.Component {
 class Video extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.onMouseDown = this.onMouseDown.bind(this);
   }
 
   componentDidMount() {
@@ -182,7 +177,7 @@ class Video extends React.PureComponent {
     this.updateUrlAndTitle();
   }
 
-  onMouseDown(eventObject) {
+  onMouseDown = (eventObject) => {
     if (this.props.state === 'playing') {
       if (eventObject.target.paused) {
         eventObject.target.play().catch(() => this.props.nextVideo());

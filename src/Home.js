@@ -26,14 +26,13 @@ import Search from './Search';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.resetSearch = this.resetSearch.bind(this);
     this.state = {
       query: this.props.query || '',
       results: this.props.results || [],
     }
   }
 
-  resetSearch() {
+  resetSearch = () => {
     this.setState({ query: '', results: [] });
   }
 
