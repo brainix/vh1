@@ -16,7 +16,7 @@
     "eject": "react-scripts eject"
   },
   "engines": {
-    "node": "11.4.0",
+    "node": "11.5.0",
     "npm": "6.5.0"
   },
   "browserslist": [
