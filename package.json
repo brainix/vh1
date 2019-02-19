@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "npm": "^6.7.0",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
+    "npm": "^6.8.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5"
   },
@@ -16,7 +16,7 @@
     "eject": "react-scripts eject"
   },
   "engines": {
-    "node": "11.9.0",
+    "node": "11.10.0",
     "npm": "6.7.0"
   },
   "browserslist": [
