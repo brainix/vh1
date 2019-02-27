@@ -165,10 +165,6 @@ class Buffer extends React.Component {
 }
 
 class Video extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.updateUrlAndTitle();
   }
