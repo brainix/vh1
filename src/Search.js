@@ -155,7 +155,14 @@ class Input extends React.PureComponent {
       const urlQueryString = querystring.stringify({ q: query });
       fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
         .then(response => response.json())
-        .then(data => this.props.updateState({ results: data.songs }))
+        .then(data => {
+          const currentQuery = (
+            document.querySelectorAll('input[type=search]')[0].value
+          );
+          if (data.q === currentQuery) {
+            this.props.updateState({ results: data.songs });
+          }
+        })
         .catch(console.log);
       const [method, body] = ['POST', new FormData()];
       body.append('q', query);
