@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "npm": "^6.11.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
     "react-router-dom": "5.1.0",
     "react-scripts": "3.1.2"
   },
