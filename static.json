@@ -1,8 +1,11 @@
 {
   "https_only": true,
   "root": "build/",
+  "proxies": {
+    "/sitemap.xml": {"origin": "${REACT_APP_API}/sitemap.xml"}
+  },
   "redirects": {
-    "/gtfo": {"url": "${REACT_APP_API}/gtfo", "status": 302}
+    "/gtfo": {"url": "${REACT_APP_API}/v1/gtfo", "status": 302}
   },
   "error_page": "index.html"
 }
