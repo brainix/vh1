@@ -18,13 +18,13 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import './requestAnimationFrame';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { executeSearch, clearSearch } from './actions/search';
+import '../requestAnimationFrame';
+import '../monkey';
+import { executeSearch, clearSearch } from '../actions/search';
 import './Search.css';
-import './monkey';
 
 const querystring = require('querystring');
 

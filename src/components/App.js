@@ -23,7 +23,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers/reducers';
+import reducers from '../reducers/reducers';
 import About from './About';
 import Home from './Home';
 import Logo from './Logo';

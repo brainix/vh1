@@ -19,8 +19,8 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
+import '../monkey';
 import './Player.css';
-import './monkey';
 
 class Player extends React.PureComponent {
   constructor(props) {
