@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  reducers.js                                                              |
+ |  search.js                                                                |
  |                                                                           |
  |  Copyright © 2017-2019, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,11 +18,36 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { combineReducers } from 'redux';
-import searchReducer from './search';
+export const SET_QUERY = 'SET_QUERY';
+export const SHOW_RESULTS = 'SHOW_RESULTS';
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
-const reducers = combineReducers({
-  search: searchReducer,
-});
+const setQuery = (query) => {
+  return {
+    type: SET_QUERY,
+    query,
+  };
+}
 
-export default reducers;
+const showResults = (results) => {
+  return {
+    type: SHOW_RESULTS,
+    results,
+  };
+}
+
+export const executeSearch = (query) => {
+  return (dispatch) => {
+    dispatch(setQuery(query));
+    fetch(`${process.env.REACT_APP_API}/v1/songs/search?${query}`)
+      .then((response) => response.json())
+      .then((data) => dispatch(showResults(data.songs)))
+      .catch(console.log);
+  };
+}
+
+export const clearSearch = () => {
+  return {
+    type: CLEAR_SEARCH,
+  };
+}

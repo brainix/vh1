@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  reducers.js                                                              |
+ |  search.js                                                                |
  |                                                                           |
  |  Copyright © 2017-2019, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,11 +18,19 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { combineReducers } from 'redux';
-import searchReducer from './search';
+import { SET_QUERY, SHOW_RESULTS, CLEAR_SEARCH } from '../actions/search';
 
-const reducers = combineReducers({
-  search: searchReducer,
-});
+const searchReducer = (state = { query: '', results: [] }, action) => {
+  switch (action.type) {
+    case SET_QUERY:
+      return { ...state, query: action.query };
+    case SHOW_RESULTS:
+      return { ...state, results: action.results }
+    case CLEAR_SEARCH:
+      return { query: '', results: [] };
+    default:
+      return state;
+  }
+};
 
-export default reducers;
+export default searchReducer
