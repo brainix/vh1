@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  reducers.js                                                              |
  |                                                                           |
  |  Copyright © 2017-2019, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,31 +18,10 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import reducers from './reducers/reducers';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+import { combineReducers } from 'redux';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const reducers = combineReducers({
+  blank: state => null
+});
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/:artistId/:songId" component={Home} />
-          <Route exact path="/wtf" component={About} />
-        </Switch>
-        <Route component={Logo} />
-      </>
-    </Router>
-  </Provider>
-);
-
-export default App;
+export default reducers;
