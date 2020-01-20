@@ -23,31 +23,37 @@ export const SHOW_RESULTS = 'SHOW_RESULTS';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 const setQuery = (query) => {
-  return {
+  const message = {
     type: SET_QUERY,
     query,
   };
+  return message;
 }
 
 const showResults = (results) => {
-  return {
+  const message = {
     type: SHOW_RESULTS,
     results,
   };
-}
-
-export const executeSearch = (query) => {
-  return (dispatch) => {
-    dispatch(setQuery(query));
-    fetch(`${process.env.REACT_APP_API}/v1/songs/search?${query}`)
-      .then((response) => response.json())
-      .then((data) => dispatch(showResults(data.songs)))
-      .catch(console.log);
-  };
+  return message;
 }
 
 export const clearSearch = () => {
   return {
     type: CLEAR_SEARCH,
+  };
+}
+
+export const executeSearch = (query) => {
+  return (dispatch) => {
+    if (query) {
+      dispatch(setQuery(query));
+      fetch(`${process.env.REACT_APP_API}/v1/songs/search?q=${query}`)
+        .then((response) => response.json())
+        .then((data) => dispatch(showResults(data.songs)))
+        .catch(console.log);
+      } else {
+        dispatch(clearSearch());
+      }
   };
 }

@@ -29,28 +29,9 @@ import './Search.css';
 const querystring = require('querystring');
 
 class Search extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: this.props.query || '',
-      results: this.props.results || [],
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      query: nextProps.query || '',
-      results: nextProps.results || [],
-    });
-  }
-
   onSubmit = (eventObject) => {
     eventObject.preventDefault();
     this.refs.results.redirect();
-  }
-
-  updateState = (nextState) => {
-    this.setState(nextState);
   }
 
   render() {
@@ -58,12 +39,11 @@ class Search extends React.PureComponent {
       <form className="Search" onSubmit={this.onSubmit}>
         <Precache />
         <fieldset>
-          <Input query={this.state.query} updateState={this.updateState} />
+          <ConnectedInput query={this.props.search.query} />
         </fieldset>
-        <Results
-          results={this.state.results}
+        <ConnectedResults
+          results={this.props.search.results}
           history={this.props.history}
-          ref="results"
         />
       </form>
     );
@@ -152,27 +132,11 @@ class Input extends React.PureComponent {
 
   onChange = (eventObject) => {
     const query = eventObject.target.value;
-    this.props.updateState({ query });
-    if (query) {
-      const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-        .then(response => response.json())
-        .then(data => {
-          const currentQuery = (
-            document.querySelectorAll('input[type=search]')[0].value
-          );
-          if (data.q === currentQuery) {
-            this.props.updateState({ results: data.songs });
-          }
-        })
-        .catch(console.log);
-      const [method, body] = ['POST', new FormData()];
-      body.append('q', query);
-      fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
-        .catch(console.log);
-    } else {
-      this.props.updateState({ results: [] });
-    }
+    this.props.executeSearch(query);
+    const [method, body] = ['POST', new FormData()];
+    body.append('q', query);
+    fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
+      .catch(console.log);
   }
 
   render() {
@@ -241,7 +205,7 @@ class Results extends React.PureComponent {
 
   render() {
     const items = [];
-    this.props.results.forEach((result, index) => {
+    this.props.search.results.forEach((result, index) => {
       const key = result._id;
       const selected = index === this.state.selected;
       const ref = index === this.state.selected ? 'result' : null;
@@ -281,4 +245,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearSearch: () => dispatch(clearSearch()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
+const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
+const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
+
+export default ConnectedSearch
