@@ -84,7 +84,7 @@ class Buffer extends React.Component {
     if (this.videos.length === 0) {
       if (this.props.artistId && this.props.songId) {
         const { artistId, songId } = this.props;
-        fetch(`${process.env.REACT_APP_API}/artists/${artistId}/songs/${songId}`)
+        fetch(`${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`)
           .then(response => response.json())
           .then(data => {
             this.videos = [data.songs[0]];
@@ -98,7 +98,7 @@ class Buffer extends React.Component {
   }
 
   moreVideos(init) {
-    fetch(`${process.env.REACT_APP_API}/songs`)
+    fetch(`${process.env.REACT_APP_API}/v1/songs`)
       .then(response => response.json())
       .then(data => {
         this.videos = this.videos.concat(data.songs.shuffle());

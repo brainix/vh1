@@ -74,7 +74,7 @@ class Precache extends React.PureComponent {
   }
 
   getQueries() {
-    fetch(`${process.env.REACT_APP_API}/queries`)
+    fetch(`${process.env.REACT_APP_API}/v1/queries`)
       .then(response => response.json())
       .then(data => this.cacheQueries(data.queries))
       .catch(console.log);
@@ -84,7 +84,7 @@ class Precache extends React.PureComponent {
     if (queries.length) {
       const query = queries.shift();
       const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
+      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
         .then(() => this.cacheQueries(queries))
         .catch(error => {
           console.log(error);
@@ -153,7 +153,7 @@ class Input extends React.PureComponent {
     this.props.updateState({ query });
     if (query) {
       const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/songs/search?${urlQueryString}`)
+      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
         .then(response => response.json())
         .then(data => {
           const currentQuery = (
@@ -166,7 +166,7 @@ class Input extends React.PureComponent {
         .catch(console.log);
       const [method, body] = ['POST', new FormData()];
       body.append('q', query);
-      fetch(`${process.env.REACT_APP_API}/queries`, { method, body })
+      fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
         .catch(console.log);
     } else {
       this.props.updateState({ results: [] });
