@@ -21,6 +21,8 @@
 import './requestAnimationFrame';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { executeSearch, clearSearch } from './actions/search';
 import './Search.css';
 import './monkey';
 
@@ -270,4 +272,13 @@ const Result = React.memo((props) => {
   );
 });
 
-export default Search;
+const mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  executeSearch: (query) => dispatch(executeSearch(query)),
+  clearSearch: () => dispatch(clearSearch()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
