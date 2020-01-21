@@ -19,7 +19,9 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
+import { connect } from 'react-redux';
 import '../monkey';
+import { clearSearch } from '../actions/search';
 import './Player.css';
 
 class Player extends React.PureComponent {
@@ -149,7 +151,7 @@ class Buffer extends React.Component {
       const video = this.videos[this.state.index + index];
       const key = `/${video.artist__id}/${video.song__id}/${state}`;
       videos.push(
-        <Video
+        <ConnectedVideo
           key={key}
           video={video}
           state={state}
@@ -180,7 +182,7 @@ class Video extends React.PureComponent {
       } else if (document.activeElement === document.body) {
         this.props.nextVideo();
       } else {
-        this.props.resetSearch();
+        this.props.clearSearch();
       }
     }
   }
@@ -209,5 +211,13 @@ class Video extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  clearSearch: () => dispatch(clearSearch()),
+});
+
+const ConnectedVideo = connect(mapStateToProps, mapDispatchToProps)(Video);
 
 export default Player;

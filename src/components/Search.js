@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
 import '../monkey';
-import { executeSearch, clearSearch } from '../actions/search';
+import { executeSearch } from '../actions/search';
 import './Search.css';
 
 const querystring = require('querystring');
@@ -242,7 +242,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   executeSearch: (query) => dispatch(executeSearch(query)),
-  clearSearch: () => dispatch(clearSearch()),
 });
 
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
