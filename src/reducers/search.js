@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  Home.js                                                                  |
+ |  search.js                                                                |
  |                                                                           |
  |  Copyright © 2017-2019, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,48 +18,21 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import Player from './Player';
-import Search from './Search';
+import { SET_QUERY, SHOW_RESULTS, SET_SELECTED, CLEAR_SEARCH } from '../actions/search';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: this.props.query || '',
-      results: this.props.results || [],
-    }
+const searchReducer = (state = { query: '', results: [], selected: null }, action) => {
+  switch (action.type) {
+    case SET_QUERY:
+      return { ...state, query: action.query, selected: null };
+    case SHOW_RESULTS:
+      return { ...state, results: action.results, selected: null };
+    case SET_SELECTED:
+      return { ...state, selected: action.index };
+    case CLEAR_SEARCH:
+      return { query: '', results: [], selected: null };
+    default:
+      return state;
   }
+};
 
-  resetSearch = () => {
-    this.setState({ query: '', results: [] });
-  }
-
-  render() {
-    let artistId, songId;
-    if (this.props.match) {
-      ({ artistId, songId } = this.props.match.params);
-    } else {
-      [artistId, songId] = [null, null];
-    }
-    return [
-      <Player
-        key="player"
-        state="playing"
-        artistId={artistId}
-        songId={songId}
-        resetSearch={this.resetSearch}
-        history={this.props.history}
-      />,
-      <Search
-        key="search"
-        query={this.state.query}
-        results={this.state.results}
-        history={this.props.history}
-      />,
-    ];
-  }
-}
-
-export default withRouter(Home);
+export default searchReducer
