@@ -196,31 +196,49 @@ class Results extends React.PureComponent {
     const items = [];
     this.props.search.results.forEach((result, index) => {
       const key = result._id;
-      const selected = index === this.props.search.selected;
-      const item = <Result key={key} result={result} selected={selected} />;
+      const item = (
+        <ConnectedResult
+          key={key}
+          result={result}
+          index={index}
+        />
+      );
       items.push(item);
     });
     return <ol>{items}</ol>;
   }
 }
 
-const Result = React.memo((props) => {
-  const { artist__id, song__id, artist, song } = props.result;
-  const target = `/${artist__id}/${song__id}`;
-  const style = { textDecoration: props.selected ? 'underline' : null };
-  const html = `${artist} &mdash; ${song}`;
-  const title = html.htmlToText();
-  return (
-    <li>
-      <Link
-        to={target}
-        style={style}
-        dangerouslySetInnerHTML={{ __html: html }}
-        title={title}
-      />
-    </li>
-  );
-});
+class Result extends React.PureComponent {
+  componentDidMount() {
+    document.addEventListener('mouseenter', this.onMouseEnter);
+  }
+
+  onMouseEnter = (eventObject) => {
+    this.props.setSelected(this.props.index);
+  }
+
+  render() {
+    const { artist__id, song__id, artist, song } = this.props.result;
+    const target = `/${artist__id}/${song__id}`;
+    const selected = this.props.index === this.props.search.selected;
+    const style = { textDecoration: selected ? 'underline' : null };
+    const html = `${artist} &mdash; ${song}`;
+    const title = html.htmlToText();
+    return (
+      <li>
+        <span onMouseEnter={this.onMouseEnter}>
+          <Link
+            to={target}
+            style={style}
+            dangerouslySetInnerHTML={{ __html: html }}
+            title={title}
+          />
+        </span>
+      </li>
+    );
+  }
+}
 
 const mapStateToProps = (state) => ({
   search: state.search,
@@ -235,5 +253,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
 const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
+const ConnectedResult = connect(mapStateToProps, mapDispatchToProps)(Result);
 
 export default ConnectedSearch
