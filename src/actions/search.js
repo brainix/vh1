@@ -20,6 +20,7 @@
 
 export const SET_QUERY = 'SET_QUERY';
 export const SHOW_RESULTS = 'SHOW_RESULTS';
+export const SET_SELECTED = 'SET_SELECTED';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 const setQuery = (query) => {
@@ -38,10 +39,19 @@ const showResults = (results) => {
   return message;
 }
 
+export const setSelected = (index) => {
+  const message = {
+    type: SET_SELECTED,
+    index,
+  };
+  return message;
+}
+
 export const clearSearch = () => {
-  return {
+  const message = {
     type: CLEAR_SEARCH,
   };
+  return message;
 }
 
 export const executeSearch = (query) => {

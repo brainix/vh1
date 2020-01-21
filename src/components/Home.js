@@ -23,43 +23,24 @@ import { withRouter } from 'react-router-dom';
 import Player from './Player';
 import Search from './Search';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: this.props.query || '',
-      results: this.props.results || [],
-    }
+const Home = (props) => {
+  let artistId, songId;
+  if (props.match) {
+    ({ artistId, songId } = props.match.params);
+  } else {
+    [artistId, songId] = [null, null];
   }
 
-  resetSearch = () => {
-    this.setState({ query: '', results: [] });
-  }
-
-  render() {
-    let artistId, songId;
-    if (this.props.match) {
-      ({ artistId, songId } = this.props.match.params);
-    } else {
-      [artistId, songId] = [null, null];
-    }
-    return [
-      <Player
-        key="player"
-        state="playing"
-        artistId={artistId}
-        songId={songId}
-        resetSearch={this.resetSearch}
-        history={this.props.history}
-      />,
-      <Search
-        key="search"
-        query={this.state.query}
-        results={this.state.results}
-        history={this.props.history}
-      />,
-    ];
-  }
+  return [
+    <Player
+      key="player"
+      state="playing"
+      artistId={artistId}
+      songId={songId}
+      history={props.history}
+    />,
+    <Search key="search" history={props.history} />,
+  ];
 }
 
 export default withRouter(Home);

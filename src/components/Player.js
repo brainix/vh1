@@ -156,7 +156,6 @@ class Buffer extends React.Component {
           video={video}
           state={state}
           nextVideo={this.nextVideo}
-          resetSearch={this.props.resetSearch}
           history={this.props.history}
         />
       );

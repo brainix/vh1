@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
 import '../monkey';
-import { executeSearch } from '../actions/search';
+import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
 
 const querystring = require('querystring');
@@ -31,7 +31,12 @@ const querystring = require('querystring');
 class Search extends React.PureComponent {
   onSubmit = (eventObject) => {
     eventObject.preventDefault();
-    this.refs.results.redirect();
+    if (this.props.search.results && this.props.search.selected !== null) {
+      const { artist__id, song__id } = this.props.search.results[this.props.search.selected];
+      const target = `/${artist__id}/${song__id}`;
+      this.props.history.push(target);
+      this.props.clearSearch();
+    }
   }
 
   render() {
@@ -39,12 +44,9 @@ class Search extends React.PureComponent {
       <form className="Search" onSubmit={this.onSubmit}>
         <Precache />
         <fieldset>
-          <ConnectedInput query={this.props.search.query} />
+          <ConnectedInput />
         </fieldset>
-        <ConnectedResults
-          results={this.props.search.results}
-          history={this.props.history}
-        />
+        <ConnectedResults history={this.props.history} />
       </form>
     );
   }
@@ -95,7 +97,7 @@ class Input extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    if (!this.props.query) {
+    if (!this.props.search.query) {
       this.input.blur();
     }
   }
@@ -147,7 +149,7 @@ class Input extends React.PureComponent {
         maxLength="20"
         autoComplete="off"
         spellCheck="false"
-        value={this.props.query}
+        value={this.props.search.query}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         onChange={this.onChange}
@@ -161,7 +163,6 @@ class Results extends React.PureComponent {
     super(props);
     this.UP_KEYS = [38];
     this.DOWN_KEYS = [40];
-    this.state = { selected: null };
   }
 
   componentDidMount() {
@@ -173,7 +174,7 @@ class Results extends React.PureComponent {
   }
 
   onKeyDown = (eventObject) => {
-    if (this.props.results.length) {
+    if (this.props.search.results.length) {
       if (this.UP_KEYS.includes(eventObject.which)) {
         eventObject.preventDefault();
         this.updateSelected(-1);
@@ -185,33 +186,22 @@ class Results extends React.PureComponent {
   }
 
   updateSelected = (direction) => {
-    let selected = this.state.selected;
+    let selected = this.props.search.selected;
     if (selected === null) {
       selected = -0.5 * direction - 0.5;
     }
     selected += direction;
-    selected += this.props.results.length;
-    selected %= this.props.results.length;
-    this.setState({ selected });
-  }
-
-  redirect() {
-    if (this.props.results && this.state.selected !== null) {
-      const { artist__id, song__id } = this.props.results[this.state.selected];
-      const target = `/${artist__id}/${song__id}`;
-      this.props.history.push(target);
-    }
+    selected += this.props.search.results.length;
+    selected %= this.props.search.results.length;
+    this.props.setSelected(selected);
   }
 
   render() {
     const items = [];
     this.props.search.results.forEach((result, index) => {
       const key = result._id;
-      const selected = index === this.state.selected;
-      const ref = index === this.state.selected ? 'result' : null;
-      const item = (
-        <Result key={key} result={result} selected={selected} ref={ref} />
-      );
+      const selected = index === this.props.search.selected;
+      const item = <Result key={key} result={result} selected={selected} />;
       items.push(item);
     });
     return <ol>{items}</ol>;
@@ -242,6 +232,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   executeSearch: (query) => dispatch(executeSearch(query)),
+  setSelected: (index) => dispatch(setSelected(index)),
+  clearSearch: () => dispatch(clearSearch()),
 });
 
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
