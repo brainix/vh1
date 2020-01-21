@@ -50,7 +50,7 @@ class About extends React.PureComponent {
 
           <h2>How can I contact you?</h2>
           <p>
-            Find me on reddit
+            Find me on Reddit
             (<a href='https://www.reddit.com/user/Brainix'>u/Brainix</a>),
             email me
             (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
