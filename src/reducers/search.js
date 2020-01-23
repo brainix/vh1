@@ -35,4 +35,4 @@ const searchReducer = (state = { query: '', results: [], selected: null }, actio
   }
 };
 
-export default searchReducer
+export default searchReducer;

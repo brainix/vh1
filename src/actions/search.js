@@ -23,25 +23,10 @@ export const SHOW_RESULTS = 'SHOW_RESULTS';
 export const SET_SELECTED = 'SET_SELECTED';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
-const setQuery = (query) => {
-  const message = { type: SET_QUERY, query };
-  return message;
-}
-
-const showResults = (results) => {
-  const message = { type: SHOW_RESULTS, results };
-  return message;
-}
-
-export const setSelected = (index) => {
-  const message = { type: SET_SELECTED, index };
-  return message;
-}
-
-export const clearSearch = () => {
-  const message = { type: CLEAR_SEARCH };
-  return message;
-}
+const setQuery = (query) => ({ type: SET_QUERY, query });
+const showResults = (results) => ({ type: SHOW_RESULTS, results });
+export const setSelected = (index) => ({ type: SET_SELECTED, index });
+export const clearSearch = () => ({ type: CLEAR_SEARCH });
 
 export const executeSearch = (query) => {
   return (dispatch) => {
