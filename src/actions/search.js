@@ -24,33 +24,22 @@ export const SET_SELECTED = 'SET_SELECTED';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 const setQuery = (query) => {
-  const message = {
-    type: SET_QUERY,
-    query,
-  };
+  const message = { type: SET_QUERY, query };
   return message;
 }
 
 const showResults = (results) => {
-  const message = {
-    type: SHOW_RESULTS,
-    results,
-  };
+  const message = { type: SHOW_RESULTS, results };
   return message;
 }
 
 export const setSelected = (index) => {
-  const message = {
-    type: SET_SELECTED,
-    index,
-  };
+  const message = { type: SET_SELECTED, index };
   return message;
 }
 
 export const clearSearch = () => {
-  const message = {
-    type: CLEAR_SEARCH,
-  };
+  const message = { type: CLEAR_SEARCH };
   return message;
 }
 
