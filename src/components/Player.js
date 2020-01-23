@@ -21,6 +21,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../monkey';
+import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
 import { clearSearch } from '../actions/search';
 import './Player.css';
 
@@ -37,11 +38,11 @@ class Player extends React.PureComponent {
   }
 
   onKeyUp = (eventObject) => {
-    if (this.refs.buffer && document.activeElement === document.body) {
+    if (document.activeElement === document.body) {
       if (this.NEXT_KEYS.includes(eventObject.which)) {
-        this.refs.buffer.nextVideo();
+        this.props.nextVideo();
       } else if (this.PREV_KEYS.includes(eventObject.which)) {
-        this.refs.buffer.prevVideo();
+        this.props.previousVideo();
       }
     }
   }
@@ -54,20 +55,13 @@ class Player extends React.PureComponent {
   }
 
   render() {
-    return <Buffer {...this.props} ref="buffer" />;
+    return <ConnectedBuffer {...this.props} />;
   }
 }
 
 class Buffer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.BATCH_SIZE = 60;
-    this.videos = [];
-    this.state = null;
-  }
-
   componentDidMount() {
-    this.initVideos();
+    this.props.fetchQueue(this.props.artistId, this.props.songId);
   }
 
   componentDidUpdate(prevProps) {
@@ -76,55 +70,8 @@ class Buffer extends React.Component {
       || this.props.songId !== prevProps.songId
     ) {
       if (this.props.history.action !== 'REPLACE') {
-        this.videos = [];
-        this.initVideos();
+        this.props.fetchQueue(this.props.artistId, this.props.songId);
       }
-    }
-  }
-
-  initVideos() {
-    if (this.videos.length === 0) {
-      if (this.props.artistId && this.props.songId) {
-        const { artistId, songId } = this.props;
-        fetch(`${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`)
-          .then(response => response.json())
-          .then(data => {
-            this.videos = [data.songs[0]];
-            this.moreVideos(true);
-          })
-          .catch(console.log);
-      } else {
-        this.moreVideos(true);
-      }
-    }
-  }
-
-  moreVideos(init) {
-    fetch(`${process.env.REACT_APP_API}/v1/songs`)
-      .then(response => response.json())
-      .then(data => {
-        this.videos = this.videos.concat(data.songs.shuffle());
-        if (init) {
-          this.setState({ index: 0 });
-        }
-      })
-      .catch(console.log);
-  }
-
-  nextVideo = () => {
-    if (this.state.index !== null) {
-      if (this.state.index < this.videos.length - 1) {
-        this.setState({ index: this.state.index + 1 });
-      }
-      if (this.state.index >= this.videos.length - this.BATCH_SIZE / 2) {
-        this.moreVideos(false);
-      }
-    }
-  }
-
-  prevVideo = () => {
-    if (this.state.index !== null && this.state.index > 0) {
-      this.setState({ index: this.state.index - 1 });
     }
   }
 
@@ -133,13 +80,12 @@ class Buffer extends React.Component {
     let states;
 
     if (
-      this.state === null
-      || this.state.index === null
-      || this.state.index > this.videos.length - 1
+      this.props.player.index === null
+      || this.props.player.index > this.props.player.queue.length - 1
     ) {
       states = [];
     } else if (
-      this.state.index === this.videos.length - 1
+      this.props.player.index === this.props.player.queue.length - 1
       || this.props.state === 'background'
     ) {
       states = [this.props.state];
@@ -148,14 +94,13 @@ class Buffer extends React.Component {
     }
 
     states.forEach((state, index) => {
-      const video = this.videos[this.state.index + index];
+      const video = this.props.player.queue[this.props.player.index + index];
       const key = `/${video.artist__id}/${video.song__id}/${state}`;
       videos.push(
         <ConnectedVideo
           key={key}
           video={video}
           state={state}
-          nextVideo={this.nextVideo}
           history={this.props.history}
         />
       );
@@ -211,12 +156,19 @@ class Video extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  player: state.player,
+});
 
 const mapDispatchToProps = (dispatch) => ({
+  previousVideo: () => dispatch(previousVideo()),
+  nextVideo: () => dispatch(nextVideo()),
+  fetchQueue: (artistId, songId) => dispatch(fetchQueue(artistId, songId)),
   clearSearch: () => dispatch(clearSearch()),
 });
 
+const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
+const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 const ConnectedVideo = connect(mapStateToProps, mapDispatchToProps)(Video);
 
-export default Player;
+export default ConnectedPlayer;

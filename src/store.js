@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  store.js                                                                 |
  |                                                                           |
  |  Copyright © 2017-2020, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,27 +18,10 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../store';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers/reducers';
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/:artistId/:songId" component={Home} />
-          <Route exact path="/wtf" component={About} />
-        </Switch>
-        <Route component={Logo} />
-      </>
-    </Router>
-  </Provider>
-);
+const store = createStore(reducers, applyMiddleware(thunk));
 
-export default App;
+export default store;
