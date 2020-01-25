@@ -210,10 +210,6 @@ class Results extends React.PureComponent {
 }
 
 class Result extends React.PureComponent {
-  componentDidMount() {
-    document.addEventListener('mouseenter', this.onMouseEnter);
-  }
-
   onMouseEnter = (eventObject) => {
     this.props.setSelected(this.props.index);
   }
@@ -231,15 +227,14 @@ class Result extends React.PureComponent {
     const title = html.htmlToText();
     return (
       <li>
-        <span onMouseEnter={this.onMouseEnter}>
-          <Link
-            to={target}
-            style={style}
-            dangerouslySetInnerHTML={{ __html: html }}
-            title={title}
-            onClick={this.onClick}
-          />
-        </span>
+        <Link
+          to={target}
+          style={style}
+          dangerouslySetInnerHTML={{ __html: html }}
+          title={title}
+          onMouseEnter={this.onMouseEnter}
+          onClick={this.onClick}
+        />
       </li>
     );
   }
