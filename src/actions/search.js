@@ -18,6 +18,8 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
+import store from '../store';
+
 export const SET_QUERY = 'SET_QUERY';
 export const SHOW_RESULTS = 'SHOW_RESULTS';
 export const SET_SELECTED = 'SET_SELECTED';
@@ -34,7 +36,11 @@ export const executeSearch = (query) => {
       dispatch(setQuery(query));
       fetch(`${process.env.REACT_APP_API}/v1/songs/search?q=${query}`)
         .then((response) => response.json())
-        .then((data) => dispatch(showResults(data.songs)))
+        .then((data) => {
+          if (data.metadata.q === store.getState().search.query) {
+            dispatch(showResults(data.songs));
+          }
+        })
         .catch(console.log);
       } else {
         dispatch(clearSearch());
