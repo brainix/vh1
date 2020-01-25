@@ -218,6 +218,10 @@ class Result extends React.PureComponent {
     this.props.setSelected(this.props.index);
   }
 
+  onClick = () => {
+    this.props.clearSearch();
+  }
+
   render() {
     const { artist__id, song__id, artist, song } = this.props.result;
     const target = `/${artist__id}/${song__id}`;
@@ -233,6 +237,7 @@ class Result extends React.PureComponent {
             style={style}
             dangerouslySetInnerHTML={{ __html: html }}
             title={title}
+            onClick={this.onClick}
           />
         </span>
       </li>
