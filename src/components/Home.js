@@ -33,7 +33,6 @@ const Home = (props) => {
 
   return [
     <Player
-      key="player"
       state="playing"
       artistId={artistId}
       songId={songId}
