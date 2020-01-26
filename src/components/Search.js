@@ -69,11 +69,8 @@ class Precache extends React.PureComponent {
       const query = queries.shift();
       const urlQueryString = querystring.stringify({ q: query });
       fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-        .then(() => this.cacheQueries(queries))
-        .catch(error => {
-          console.log(error);
-          this.cacheQueries(queries);
-        });
+        .catch(console.log)
+        .finally(() => this.cacheQueries(queries));
     }
   }
 
