@@ -31,15 +31,17 @@ const Home = (props) => {
     [artistId, songId] = [null, null];
   }
 
-  return [
-    <Player
-      state="playing"
-      artistId={artistId}
-      songId={songId}
-      history={props.history}
-    />,
-    <Search key="search" history={props.history} />,
-  ];
+  return (
+    <>
+      <Player
+        state="playing"
+        artistId={artistId}
+        songId={songId}
+        history={props.history}
+      />
+      <Search history={props.history} />
+    </>
+  );
 }
 
 export default withRouter(Home);
