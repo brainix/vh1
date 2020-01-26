@@ -25,18 +25,26 @@ export const EXTEND_QUEUE = 'EXTEND_QUEUE';
 export const PREVIOUS_VIDEO = 'PREVIOUS_VIDEO';
 export const NEXT_VIDEO = 'NEXT_VIDEO';
 
+const BATCH_SIZE = 60;
+
 const clearQueue = () => ({ type: CLEAR_QUEUE });
 const extendQueue = (queue) => ({ type: EXTEND_QUEUE, queue });
 export const previousVideo = () => ({ type: PREVIOUS_VIDEO });
 const nextVideoAction = () => ({ type: NEXT_VIDEO });
 
+const videosRemaining = () => {
+  const queueLength = store.getState().player.queue.length;
+  let index = store.getState().player.index;
+  if (index === null) {
+    index = -1;
+  }
+  return queueLength - index - 1;
+}
+
 export const nextVideo = () => {
   return (dispatch) => {
     dispatch(nextVideoAction());
-    const queueLength = store.getState().player.queue.length;
-    const index = store.getState().player.index;
-    const videosRemaining = queueLength - index - 1;
-    if (videosRemaining <= 30) {
+    if (videosRemaining() <= BATCH_SIZE / 2) {
       dispatch(fetchRandomSongs());
     }
   };
@@ -44,15 +52,17 @@ export const nextVideo = () => {
 
 const fetchRandomSongs = () => {
   return (dispatch) => {
-    fetch(`${process.env.REACT_APP_API}/v1/songs`)
-      .then((response) => response.json())
-      .then((data) => dispatch(extendQueue(data.songs.shuffle())))
-      .then(() => {
-        if (store.getState().player.index === null) {
-          dispatch(nextVideo());
-        }
-      })
-      .catch(console.log);
+    if (videosRemaining() <= BATCH_SIZE / 2) {
+      fetch(`${process.env.REACT_APP_API}/v1/songs`)
+        .then((response) => response.json())
+        .then((data) => dispatch(extendQueue(data.songs.shuffle())))
+        .then(() => {
+          if (store.getState().player.index === null) {
+            dispatch(nextVideo());
+          }
+        })
+        .catch(console.log);
+    }
   };
 }
 
