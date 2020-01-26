@@ -59,7 +59,7 @@ class Precache extends React.PureComponent {
 
   getQueries() {
     fetch(`${process.env.REACT_APP_API}/v1/queries`)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => this.cacheQueries(data.queries))
       .catch(console.log);
   }
