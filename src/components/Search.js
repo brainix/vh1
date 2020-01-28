@@ -26,8 +26,6 @@ import '../monkey';
 import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
 
-const querystring = require('querystring');
-
 class Search extends React.PureComponent {
   onSubmit = (eventObject) => {
     eventObject.preventDefault();
@@ -42,40 +40,12 @@ class Search extends React.PureComponent {
   render() {
     return (
       <form className="Search" onSubmit={this.onSubmit}>
-        <Precache />
         <fieldset>
           <ConnectedInput />
         </fieldset>
         <ConnectedResults history={this.props.history} />
       </form>
     );
-  }
-}
-
-class Precache extends React.PureComponent {
-  componentDidMount() {
-    this.getQueries();
-  }
-
-  getQueries() {
-    fetch(`${process.env.REACT_APP_API}/v1/queries`)
-      .then((response) => response.json())
-      .then((data) => this.cacheQueries(data.queries))
-      .catch(console.log);
-  }
-
-  cacheQueries(queries) {
-    if (queries.length) {
-      const query = queries.shift();
-      const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-        .catch(console.log)
-        .finally(() => this.cacheQueries(queries));
-    }
-  }
-
-  render() {
-    return null;
   }
 }
 
@@ -252,4 +222,4 @@ const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 const ConnectedResult = connect(mapStateToProps, mapDispatchToProps)(Result);
 
-export default ConnectedSearch
+export default ConnectedSearch;

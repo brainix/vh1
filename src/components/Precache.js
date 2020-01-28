@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  Precache.js                                                              |
  |                                                                           |
  |  Copyright © 2017-2020, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -19,26 +19,34 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../store';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
-import Precache from './Precache';
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </Router>
-    <Precache />
-  </Provider>
-);
+const querystring = require('querystring');
 
-export default App;
+class Precache extends React.PureComponent {
+  componentDidMount() {
+    this.getQueries();
+  }
+
+  getQueries() {
+    fetch(`${process.env.REACT_APP_API}/v1/queries`)
+      .then((response) => response.json())
+      .then((data) => this.cacheQueries(data.queries))
+      .catch(console.log);
+  }
+
+  cacheQueries(queries) {
+    if (queries.length) {
+      const query = queries.shift();
+      const urlQueryString = querystring.stringify({ q: query });
+      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
+        .catch(console.log)
+        .finally(() => this.cacheQueries(queries));
+    }
+  }
+
+  render() {
+    return null;
+  }
+}
+
+export default Precache;
