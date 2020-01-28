@@ -141,8 +141,6 @@ class Video extends React.PureComponent {
 
   render() {
     const className = this.props.state.capitalize();
-    const iOS = !!navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    const muted = iOS || this.props.state !== 'playing';
     return (
       <video
         className={className}
@@ -150,7 +148,7 @@ class Video extends React.PureComponent {
         preload="auto"
         loop
         autoPlay={this.props.state === 'buffering' ? null : 'autoplay'}
-        muted={muted}
+        muted={this.props.state !== 'playing'}
         playsInline
         onMouseDown={this.onMouseDown}
       />
