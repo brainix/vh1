@@ -95,7 +95,7 @@ class Buffer extends React.Component {
 
     states.forEach((state, index) => {
       const video = this.props.player.queue[this.props.player.index + index];
-      const key = `/${video.artist__id}/${video.song__id}/${state}`;
+      const key = this.props.state;
       videos.push(
         <ConnectedVideo
           key={key}
