@@ -162,10 +162,9 @@ class Results extends React.PureComponent {
   render() {
     const items = [];
     this.props.search.results.forEach((result, index) => {
-      const key = result._id;
       const item = (
         <ConnectedResult
-          key={key}
+          key={result._id}
           result={result}
           index={index}
         />
