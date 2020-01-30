@@ -27,6 +27,10 @@ import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
 
 class Search extends React.PureComponent {
+  componentDidMount() {
+    this.props.clearSearch();
+  }
+
   onSubmit = (eventObject) => {
     eventObject.preventDefault();
     if (this.props.search.results && this.props.search.selected !== null) {
