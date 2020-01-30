@@ -59,6 +59,15 @@ class Player extends React.PureComponent {
   }
 }
 
+let mapStateToProps = (state) => ({});
+
+let mapDispatchToProps = (dispatch) => ({
+  previousVideo: () => dispatch(previousVideo()),
+  nextVideo: () => dispatch(nextVideo()),
+});
+
+const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
+
 class Buffer extends React.Component {
   componentDidMount() {
     this.props.fetchQueue(this.props.artistId, this.props.songId);
@@ -97,7 +106,7 @@ class Buffer extends React.Component {
       const video = this.props.player.queue[this.props.player.index + index];
       videos.push(
         <ConnectedVideo
-          key={this.props.state}
+          key={state}
           video={video}
           state={state}
           history={this.props.history}
@@ -108,6 +117,16 @@ class Buffer extends React.Component {
     return <div className="Player">{videos}</div>;
   }
 }
+
+mapStateToProps = (state) => ({
+  player: state.player,
+});
+
+mapDispatchToProps = (dispatch) => ({
+  fetchQueue: (artistId, songId) => dispatch(fetchQueue(artistId, songId)),
+});
+
+const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 
 class Video extends React.PureComponent {
   componentDidMount() {
@@ -155,19 +174,13 @@ class Video extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  player: state.player,
-});
+mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-  previousVideo: () => dispatch(previousVideo()),
+mapDispatchToProps = (dispatch) => ({
   nextVideo: () => dispatch(nextVideo()),
-  fetchQueue: (artistId, songId) => dispatch(fetchQueue(artistId, songId)),
   clearSearch: () => dispatch(clearSearch()),
 });
 
-const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
-const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 const ConnectedVideo = connect(mapStateToProps, mapDispatchToProps)(Video);
 
 export default ConnectedPlayer;

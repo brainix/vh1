@@ -53,6 +53,16 @@ class Search extends React.PureComponent {
   }
 }
 
+let mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+let mapDispatchToProps = (dispatch) => ({
+  clearSearch: () => dispatch(clearSearch()),
+});
+
+const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
+
 class Input extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -129,6 +139,16 @@ class Input extends React.PureComponent {
   }
 }
 
+mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+mapDispatchToProps = (dispatch) => ({
+  executeSearch: (query) => dispatch(executeSearch(query)),
+});
+
+const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
+
 class Results extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -179,6 +199,16 @@ class Results extends React.PureComponent {
   }
 }
 
+mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+mapDispatchToProps = (dispatch) => ({
+  setSelected: (index) => dispatch(setSelected(index)),
+});
+
+const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
+
 class Result extends React.PureComponent {
   onMouseEnter = (eventObject) => {
     this.props.setSelected(this.props.index);
@@ -210,19 +240,15 @@ class Result extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
+mapStateToProps = (state) => ({
   search: state.search,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  executeSearch: (query) => dispatch(executeSearch(query)),
+mapDispatchToProps = (dispatch) => ({
   setSelected: (index) => dispatch(setSelected(index)),
   clearSearch: () => dispatch(clearSearch()),
 });
 
-const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
-const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
-const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 const ConnectedResult = connect(mapStateToProps, mapDispatchToProps)(Result);
 
 export default ConnectedSearch;
