@@ -160,6 +160,10 @@ class Results extends React.PureComponent {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
+  componentWillUnmount() {
+      document.removeEventListener('keydown', this.onKeyDown);
+  }
+
   onKeyDown = (eventObject) => {
     if (this.props.search.results.length) {
       if (this.UP_KEYS.includes(eventObject.which)) {
