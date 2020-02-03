@@ -37,6 +37,11 @@ class Player extends React.PureComponent {
     document.addEventListener('visibilitychange', this.onVisibilityChange);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.onKeyUp);
+    document.removeEventListener('visibilitychange', this.onVisibilityChange);
+  }
+
   onKeyUp = (eventObject) => {
     if (document.activeElement === document.body) {
       if (this.NEXT_KEYS.includes(eventObject.which)) {

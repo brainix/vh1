@@ -83,6 +83,11 @@ class Input extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+    document.removeEventListener('keypress', this.onKeyPress);
+  }
+
   onKeyDown = (eventObject) => {
     if (
       document.activeElement !== this.input
@@ -158,6 +163,10 @@ class Results extends React.PureComponent {
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
   }
 
   onKeyDown = (eventObject) => {
