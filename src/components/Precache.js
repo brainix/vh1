@@ -18,35 +18,31 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
+import { useEffect } from 'react';
 
 const querystring = require('querystring');
 
-class Precache extends React.PureComponent {
-  componentDidMount() {
-    this.getQueries();
-  }
+const getQueries = () => {
+  fetch(`${process.env.REACT_APP_API}/v1/queries`)
+    .then((response) => response.json())
+    .then((data) => cacheQueries(data.queries))
+    .catch(console.log);
+};
 
-  getQueries() {
-    fetch(`${process.env.REACT_APP_API}/v1/queries`)
-      .then((response) => response.json())
-      .then((data) => this.cacheQueries(data.queries))
-      .catch(console.log);
+const cacheQueries = (queries) => {
+  if (queries.length) {
+    const query = queries.shift();
+    const urlQueryString = querystring.stringify({ q: query });
+    fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
+      .catch(console.log)
+      .finally(() => cacheQueries(queries));
   }
+};
 
-  cacheQueries(queries) {
-    if (queries.length) {
-      const query = queries.shift();
-      const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-        .catch(console.log)
-        .finally(() => this.cacheQueries(queries));
-    }
-  }
+function Precache() {
+  useEffect(getQueries);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
 
 export default Precache;
