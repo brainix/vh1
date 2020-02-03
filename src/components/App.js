@@ -27,18 +27,20 @@ import Home from './Home';
 import Logo from './Logo';
 import Precache from './Precache';
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/:artistId/:songId" component={Home} />
-        <Route exact path="/wtf" component={About} />
-      </Switch>
-      <Route component={Logo} />
-    </Router>
-    <Precache />
-  </Provider>
-);
+function App() {
+  return (
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/:artistId/:songId" component={Home} />
+          <Route exact path="/wtf" component={About} />
+        </Switch>
+        <Route component={Logo} />
+      </Router>
+      <Precache />
+    </Provider>
+  );
+}
 
 export default App;

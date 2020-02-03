@@ -23,7 +23,7 @@ import { withRouter } from 'react-router-dom';
 import Player from './Player';
 import Search from './Search';
 
-const Home = (props) => {
+function Home(props) {
   let artistId, songId;
   if (props.match) {
     ({ artistId, songId } = props.match.params);
