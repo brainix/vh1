@@ -2,8 +2,7 @@
   "https_only": true,
   "root": "build/",
   "redirects": {
-    "/gtfo": {"url": "${REACT_APP_API}/v1/gtfo", "status": 302},
-    "/porn": {"url": "${REACT_APP_API}/v1/porn", "status": 302}
+    "/gtfo": {"url": "${REACT_APP_API}/v1/gtfo", "status": 302}
   },
   "error_page": "index.html"
 }

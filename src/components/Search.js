@@ -128,7 +128,7 @@ class Input extends React.PureComponent {
       .catch(console.log);
 
     if (this.PORN_QUERIES.includes(this.input.value.trimAll())) {
-      window.location.href = '/porn';
+      window.location.href = `${process.env.REACT_APP_API}/v1/porn`;
     }
   }
 
