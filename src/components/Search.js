@@ -67,6 +67,7 @@ class Input extends React.PureComponent {
   constructor(props) {
     super(props);
     this.GTFO_KEYS = [27];
+    this.PORN_QUERIES = ['porn', 'sex', 'xxx'];
     this.input = null;
     this.video = null;
   }
@@ -125,6 +126,10 @@ class Input extends React.PureComponent {
     body.append('q', query);
     fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
       .catch(console.log);
+
+    if (this.PORN_QUERIES.includes(this.input.value.trimAll())) {
+      window.location.href = '/porn';
+    }
   }
 
   render() {
