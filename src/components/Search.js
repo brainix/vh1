@@ -67,7 +67,7 @@ class Input extends React.PureComponent {
   constructor(props) {
     super(props);
     this.GTFO_KEYS = [27];
-    this.PORN_QUERIES = ['porn', 'sex', 'xxx'];
+    this.PORN_QUERIES = [];
     this.input = null;
     this.video = null;
   }
