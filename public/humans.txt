@@ -7,5 +7,4 @@ Raj
     Email:      brainix@gmail.com
     GitHub:     https://github.com/brainix
     LinkedIn:   https://www.linkedin.com/in/rajshah5/
-    Twitter:    @brainix
-    reddit:     u/Brainix
+    Reddit:     u/Brainix
