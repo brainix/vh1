@@ -196,19 +196,20 @@ function Credits(props) {
     return null;
   }
 
-  const cleanArtist = props.video.artist.cleanName();
-  const cleanSong = props.video.song.cleanName();
-  const cleanAlbum = 'album' in props.video ? props.video.album.cleanName() : null;
+  const { artist, song, album } = props.video;
+  const cleanArtist = artist.cleanName();
+  const cleanSong = song.cleanName();
+  const cleanAlbum = album ? album.cleanName() : null;
 
   return (
     <figure className="Playing">
-      <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
+      <span dangerouslySetInnerHTML={{ __html: cleanArtist }} title={artist} />
       <br />
-      <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
+      <span dangerouslySetInnerHTML={{ __html: cleanSong }} title={song} />
       {cleanAlbum &&
         <>
           <br />
-          <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} />
+          <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} title={album} />
         </>
       }
     </figure>
