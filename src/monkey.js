@@ -36,6 +36,14 @@ String.prototype.htmlToText = function () {
     .replace(/\&mdash;/ig, '-');
 };
 
+String.prototype.cleanName = function () {
+  return this.replace(/\([^()]*\)|\[[^[\]]*\]|\{[^{}]*\}/g, '')
+    .replace(/'/g, '&rsquo;')
+    .replace(/"(.*)"/g, '&ldquo;$1&rdquo;')
+    .replace(/(\W)-+(\W)/g, '$1&mdash;$2')
+    .replace(/\.{3}/g, '&hellip;');
+};
+
 Array.prototype.choice = function () {
   return this[Math.floor(Math.random() * this.length)];
 };

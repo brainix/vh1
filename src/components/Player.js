@@ -165,16 +165,19 @@ class Video extends React.PureComponent {
   render() {
     const className = this.props.state.capitalize();
     return (
-      <video
-        className={className}
-        src={this.props.video.mp4_url}
-        preload="auto"
-        loop
-        autoPlay={this.props.state === 'buffering' ? null : 'autoplay'}
-        muted={this.props.state !== 'playing'}
-        playsInline
-        onMouseDown={this.onMouseDown}
-      />
+      <>
+        <video
+          className={className}
+          src={this.props.video.mp4_url}
+          preload="auto"
+          loop
+          autoPlay={this.props.state === 'buffering' ? null : 'autoplay'}
+          muted={this.props.state !== 'playing'}
+          playsInline
+          onMouseDown={this.onMouseDown}
+        />
+        <Credits video={this.props.video} state={this.props.state} />
+      </>
     );
   }
 }
@@ -187,5 +190,35 @@ mapDispatchToProps = (dispatch) => ({
 });
 
 const ConnectedVideo = connect(mapStateToProps, mapDispatchToProps)(Video);
+
+function Credits(props) {
+  if (props.state !== 'playing') {
+    return null;
+  }
+
+  const cleanArtist = props.video.artist.cleanName();
+  const cleanSong = props.video.song.cleanName();
+  const cleanAlbum = 'album' in props.video ? props.video.album.cleanName() : null;
+
+  if (cleanAlbum) {
+    return (
+      <figure className="Playing">
+        <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
+        <br />
+        <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
+        <br />
+        <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} />
+      </figure>
+    );
+  } else {
+    return (
+      <figure className="Playing">
+        <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
+        <br />
+        <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
+      </figure>
+    );
+  }
+}
 
 export default ConnectedPlayer;

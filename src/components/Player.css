@@ -37,3 +37,16 @@
   opacity: 0.8;
   cursor: pointer;
 }
+
+.Player figure {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 24px;
+  opacity: 0.0;
+  transition: all 0.2s ease 0s;
+}
+
+.Player figure.Playing {
+  opacity: 1.0;
+}

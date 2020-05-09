@@ -69,7 +69,7 @@ class Input extends React.PureComponent {
     this.GTFO_KEYS = [27];
     this.PORN_QUERIES = [];
     this.input = null;
-    this.video = null;
+    this.playing = null;
   }
 
   componentDidMount() {
@@ -106,16 +106,20 @@ class Input extends React.PureComponent {
   }
 
   onFocus = () => {
-    const video = document.getElementsByClassName('Playing')[0];
-    if (video) {
-      this.video = video;
-      this.video.classList.remove('Playing');
+    const playing = document.querySelectorAll('.Playing');
+    if (playing) {
+      this.playing = playing;
+      this.playing.forEach((element) => {
+        element.classList.remove('Playing');
+      });
     }
   }
 
   onBlur = () => {
-    if (this.video) {
-      this.video.classList.add('Playing');
+    if (this.playing) {
+      this.playing.forEach((element) => {
+        element.classList.add('Playing');
+      });
     };
   }
 
