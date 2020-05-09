@@ -200,25 +200,19 @@ function Credits(props) {
   const cleanSong = props.video.song.cleanName();
   const cleanAlbum = 'album' in props.video ? props.video.album.cleanName() : null;
 
-  if (cleanAlbum) {
-    return (
-      <figure className="Playing">
-        <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
-        <br />
-        <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
-        <br />
-        <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} />
-      </figure>
-    );
-  } else {
-    return (
-      <figure className="Playing">
-        <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
-        <br />
-        <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
-      </figure>
-    );
-  }
+  return (
+    <figure className="Playing">
+      <span dangerouslySetInnerHTML={{ __html: cleanArtist }} />
+      <br />
+      <span dangerouslySetInnerHTML={{ __html: cleanSong }} />
+      {cleanAlbum &&
+        <>
+          <br />
+          <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} />
+        </>
+      }
+    </figure>
+  );
 }
 
 export default ConnectedPlayer;
