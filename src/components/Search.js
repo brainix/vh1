@@ -227,11 +227,11 @@ mapDispatchToProps = (dispatch) => ({
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 
 function Result(props) {
-  const onMouseEnter = () => {
+  function onMouseEnter() {
     props.setSelected(props.index);
   }
 
-  const onClick = () => {
+  function onClick() {
     props.clearSearch();
   }
 
