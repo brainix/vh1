@@ -142,9 +142,7 @@ function Video(props) {
     }
   }
 
-  useEffect(() => {
-    updateUrlAndTitle();
-  });
+  useEffect(updateUrlAndTitle);
 
   function onMouseDown(eventObject) {
     if (props.state === 'playing') {
