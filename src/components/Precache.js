@@ -22,14 +22,14 @@ import { useEffect } from 'react';
 
 const querystring = require('querystring');
 
-const getQueries = () => {
+function getQueries() {
   fetch(`${process.env.REACT_APP_API}/v1/queries`)
     .then((response) => response.json())
     .then((data) => cacheQueries(data.queries))
     .catch(console.log);
-};
+}
 
-const cacheQueries = (queries) => {
+function cacheQueries(queries) {
   if (queries.length) {
     const query = queries.shift();
     const urlQueryString = querystring.stringify({ q: query });
@@ -37,7 +37,7 @@ const cacheQueries = (queries) => {
       .catch(console.log)
       .finally(() => cacheQueries(queries));
   }
-};
+}
 
 function Precache() {
   useEffect(getQueries);
