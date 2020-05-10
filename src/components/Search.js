@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
@@ -26,31 +26,30 @@ import '../monkey';
 import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
 
-class Search extends React.PureComponent {
-  componentDidMount() {
-    this.props.clearSearch();
-  }
+function Search(props) {
+  useEffect(() => {
+    props.clearSearch();
+    // eslint-disable-next-line
+  }, []);
 
-  onSubmit = (eventObject) => {
+  const onSubmit = (eventObject) => {
     eventObject.preventDefault();
-    if (this.props.search.results && this.props.search.selected !== null) {
-      const { artist__id, song__id } = this.props.search.results[this.props.search.selected];
+    if (props.search.results && props.search.selected !== null) {
+      const { artist__id, song__id } = props.search.results[props.search.selected];
       const target = `/${artist__id}/${song__id}`;
-      this.props.history.push(target);
-      this.props.clearSearch();
+      props.history.push(target);
+      props.clearSearch();
     }
   }
 
-  render() {
-    return (
-      <form className="Search" onSubmit={this.onSubmit}>
-        <fieldset>
-          <ConnectedInput />
-        </fieldset>
-        <ConnectedResults history={this.props.history} />
-      </form>
-    );
-  }
+  return (
+    <form className="Search" onSubmit={onSubmit}>
+      <fieldset>
+        <ConnectedInput />
+      </fieldset>
+      <ConnectedResults history={props.history} />
+    </form>
+  );
 }
 
 let mapStateToProps = (state) => ({
