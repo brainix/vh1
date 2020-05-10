@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import '../monkey';
 import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
@@ -133,53 +133,47 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 
-class Video extends React.PureComponent {
-  componentDidMount() {
-    this.updateUrlAndTitle();
-  }
-
-  componentDidUpdate() {
-    this.updateUrlAndTitle();
-  }
-
-  onMouseDown = (eventObject) => {
-    if (this.props.state === 'playing') {
-      if (eventObject.target.paused) {
-        eventObject.target.play().catch(() => this.props.nextVideo());
-      } else if (document.activeElement === document.body) {
-        this.props.nextVideo();
-      } else {
-        this.props.clearSearch();
-      }
-    }
-  }
-
-  updateUrlAndTitle() {
-    if (this.props.state === 'playing') {
-      const { artist__id, song__id, artist, song } = this.props.video;
-      this.props.history.replace(`/${artist__id}/${song__id}`);
+function Video(props) {
+  function updateUrlAndTitle() {
+    if (props.state === 'playing') {
+      const { artist__id, song__id, artist, song } = props.video;
+      props.history.replace(`/${artist__id}/${song__id}`);
       document.title = `Spool - ${artist} - ${song}`;
     }
   }
 
-  render() {
-    const className = this.props.state.capitalize();
-    return (
-      <>
-        <video
-          className={className}
-          src={this.props.video.mp4_url}
-          preload="auto"
-          loop
-          autoPlay={this.props.state === 'buffering' ? null : 'autoplay'}
-          muted={this.props.state !== 'playing'}
-          playsInline
-          onMouseDown={this.onMouseDown}
-        />
-        <Credits video={this.props.video} state={this.props.state} />
-      </>
-    );
+  useEffect(() => {
+    updateUrlAndTitle();
+  });
+
+  function onMouseDown(eventObject) {
+    if (props.state === 'playing') {
+      if (eventObject.target.paused) {
+        eventObject.target.play().catch(() => props.nextVideo());
+      } else if (document.activeElement === document.body) {
+        props.nextVideo();
+      } else {
+        props.clearSearch();
+      }
+    }
   }
+
+  const className = props.state.capitalize();
+  return (
+    <>
+      <video
+        className={className}
+        src={props.video.mp4_url}
+        preload="auto"
+        loop
+        autoPlay={props.state === 'buffering' ? null : 'autoplay'}
+        muted={props.state !== 'playing'}
+        playsInline
+        onMouseDown={onMouseDown}
+      />
+      <Credits video={props.video} state={props.state} />
+    </>
+  );
 }
 
 mapStateToProps = (state) => ({});

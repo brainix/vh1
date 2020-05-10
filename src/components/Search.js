@@ -32,7 +32,7 @@ function Search(props) {
     // eslint-disable-next-line
   }, []);
 
-  const onSubmit = (eventObject) => {
+  function onSubmit(eventObject) {
     eventObject.preventDefault();
     if (props.search.results && props.search.selected !== null) {
       const { artist__id, song__id } = props.search.results[props.search.selected];
