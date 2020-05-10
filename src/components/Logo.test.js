@@ -18,9 +18,9 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import './requestAnimationFrame';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../requestAnimationFrame';
 import Logo from './Logo';
 
 it('renders without crashing', () => {
