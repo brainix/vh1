@@ -227,35 +227,34 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 
-class Result extends React.PureComponent {
-  onMouseEnter = (eventObject) => {
-    this.props.setSelected(this.props.index);
+function Result(props) {
+  const onMouseEnter = () => {
+    props.setSelected(props.index);
   }
 
-  onClick = () => {
-    this.props.clearSearch();
+  const onClick = () => {
+    props.clearSearch();
   }
 
-  render() {
-    const { artist__id, song__id, artist, song } = this.props.result;
-    const target = `/${artist__id}/${song__id}`;
-    const selected = this.props.index === this.props.search.selected;
-    const style = { textDecoration: selected ? 'underline' : null };
-    const html = `${artist} &mdash; ${song}`;
-    const title = html.htmlToText();
-    return (
-      <li>
-        <Link
-          to={target}
-          style={style}
-          dangerouslySetInnerHTML={{ __html: html }}
-          title={title}
-          onMouseEnter={this.onMouseEnter}
-          onClick={this.onClick}
-        />
-      </li>
-    );
-  }
+  const { artist__id, song__id, artist, song } = props.result;
+  const target = `/${artist__id}/${song__id}`;
+  const selected = props.index === props.search.selected;
+  const style = { textDecoration: selected ? 'underline' : null };
+  const html = `${artist} &mdash; ${song}`;
+  const title = html.htmlToText();
+
+  return (
+    <li>
+      <Link
+        to={target}
+        style={style}
+        dangerouslySetInnerHTML={{ __html: html }}
+        title={title}
+        onMouseEnter={onMouseEnter}
+        onClick={onClick}
+      />
+    </li>
+  );
 }
 
 mapStateToProps = (state) => ({
