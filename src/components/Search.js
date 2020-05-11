@@ -201,11 +201,7 @@ const Results = React.memo(function Results(props) {
   const items = [];
   props.search.results.forEach((result, index) => {
     const item = (
-      <ConnectedResult
-        key={result._id}
-        result={result}
-        index={index}
-      />
+      <ConnectedResult key={result._id} result={result} index={index} />
     );
     items.push(item);
   });
