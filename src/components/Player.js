@@ -25,44 +25,38 @@ import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
 import { clearSearch } from '../actions/search';
 import './Player.css';
 
-class Player extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.NEXT_KEYS = [39];
-    this.PREV_KEYS = [37];
-  }
+const Player = React.memo(function Player(props) {
+  useEffect(() => {
+    document.addEventListener('keyup', onKeyUp);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      document.removeEventListener('keyup', onKeyUp);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, []);
 
-  componentDidMount() {
-    document.addEventListener('keyup', this.onKeyUp);
-    document.addEventListener('visibilitychange', this.onVisibilityChange);
-  }
+  function onKeyUp(eventObject) {
+    const NEXT_KEYS = [39];
+    const PREV_KEYS = [37];
 
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.onKeyUp);
-    document.removeEventListener('visibilitychange', this.onVisibilityChange);
-  }
-
-  onKeyUp = (eventObject) => {
     if (document.activeElement === document.body) {
-      if (this.NEXT_KEYS.includes(eventObject.which)) {
-        this.props.nextVideo();
-      } else if (this.PREV_KEYS.includes(eventObject.which)) {
-        this.props.previousVideo();
+      if (NEXT_KEYS.includes(eventObject.which)) {
+        props.nextVideo();
+      } else if (PREV_KEYS.includes(eventObject.which)) {
+        props.previousVideo();
       }
     }
   }
 
-  onVisibilityChange = () => {
+  function onVisibilityChange() {
     const video = document.getElementsByTagName('video')[0];
     if (video) {
       video[document.hidden ? 'pause' : 'play']();
     }
   }
 
-  render() {
-    return <ConnectedBuffer {...this.props} />;
-  }
-}
+  return <ConnectedBuffer {...props} />;
+});
 
 let mapStateToProps = (state) => ({});
 
