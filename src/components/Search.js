@@ -163,12 +163,14 @@ mapDispatchToProps = (dispatch) => ({
 const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 
 const Results = React.memo(function Results(props) {
+  const { search } = props;
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  });
+    // eslint-disable-next-line
+  }, [search]);
 
   function onKeyDown(eventObject) {
     const UP_KEYS = [38];
