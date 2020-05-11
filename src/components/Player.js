@@ -133,7 +133,7 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 
-function Video(props) {
+const Video = React.memo(function Video(props) {
   function updateUrlAndTitle() {
     if (props.state === 'playing') {
       const { artist__id, song__id, artist, song } = props.video;
@@ -172,7 +172,7 @@ function Video(props) {
       <Credits video={props.video} state={props.state} />
     </>
   );
-}
+});
 
 mapStateToProps = (state) => ({});
 
@@ -183,7 +183,7 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedVideo = connect(mapStateToProps, mapDispatchToProps)(Video);
 
-function Credits(props) {
+const Credits = React.memo(function Credits(props) {
   if (props.state !== 'playing') {
     return null;
   }
@@ -206,6 +206,6 @@ function Credits(props) {
       }
     </figure>
   );
-}
+});
 
 export default ConnectedPlayer;

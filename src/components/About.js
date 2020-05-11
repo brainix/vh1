@@ -23,7 +23,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Player from './Player';
 import './About.css';
 
-function About(props) {
+const About = React.memo(function About(props) {
   useEffect(() => {
     document.title = 'Spool - About Me';
   });
@@ -58,6 +58,6 @@ function About(props) {
       </section>
     </>
   );
-}
+});
 
 export default withRouter(About);

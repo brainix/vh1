@@ -27,7 +27,7 @@ import Home from './Home';
 import Logo from './Logo';
 import Precache from './Precache';
 
-function App() {
+const App = React.memo(function App() {
   return (
     <Provider store={store}>
       <Router>
@@ -41,6 +41,6 @@ function App() {
       <Precache />
     </Provider>
   );
-}
+});
 
 export default App;

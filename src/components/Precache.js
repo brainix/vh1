@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const querystring = require('querystring');
 
@@ -39,10 +39,10 @@ function cacheQueries(queries) {
   }
 }
 
-function Precache() {
+const Precache = React.memo(function Precache() {
   useEffect(getQueries);
 
   return null;
-};
+});
 
 export default Precache;

@@ -23,7 +23,7 @@ import { withRouter } from 'react-router-dom';
 import Player from './Player';
 import Search from './Search';
 
-function Home(props) {
+const Home = React.memo(function Home(props) {
   let artistId, songId;
   if (props.match) {
     ({ artistId, songId } = props.match.params);
@@ -42,6 +42,6 @@ function Home(props) {
       <Search history={props.history} />
     </>
   );
-}
+});
 
 export default withRouter(Home);

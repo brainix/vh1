@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import src from './logo.png';
 import './Logo.css';
 
-function Logo(props) {
+const Logo = React.memo(function Logo(props) {
   let linkTo, alt;
   if (props.location.pathname === '/wtf') {
     [linkTo, alt] = ['/', 'Home'];
@@ -36,6 +36,6 @@ function Logo(props) {
       <img src={src} alt={alt} title={alt} />
     </Link>
   );
-}
+});
 
 export default Logo;

@@ -26,7 +26,7 @@ import '../monkey';
 import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
 
-function Search(props) {
+const Search = React.memo(function Search(props) {
   useEffect(() => {
     props.clearSearch();
     // eslint-disable-next-line
@@ -50,7 +50,7 @@ function Search(props) {
       <ConnectedResults history={props.history} />
     </form>
   );
-}
+});
 
 let mapStateToProps = (state) => ({
   search: state.search,
@@ -226,7 +226,7 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 
-function Result(props) {
+const Result = React.memo(function Result(props) {
   function onMouseEnter() {
     props.setSelected(props.index);
   }
@@ -254,7 +254,7 @@ function Result(props) {
       />
     </li>
   );
-}
+});
 
 mapStateToProps = (state) => ({
   search: state.search,
