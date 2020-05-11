@@ -162,59 +162,53 @@ mapDispatchToProps = (dispatch) => ({
 
 const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 
-class Results extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.UP_KEYS = [38];
-    this.DOWN_KEYS = [40];
-  }
+const Results = React.memo(function Results(props) {
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  });
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown);
-  }
+  function onKeyDown(eventObject) {
+    const UP_KEYS = [38];
+    const DOWN_KEYS = [40];
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown);
-  }
-
-  onKeyDown = (eventObject) => {
-    if (this.props.search.results.length) {
-      if (this.UP_KEYS.includes(eventObject.which)) {
+    if (props.search.results.length) {
+      if (UP_KEYS.includes(eventObject.which)) {
         eventObject.preventDefault();
-        this.updateSelected(-1);
-      } else if (this.DOWN_KEYS.includes(eventObject.which)) {
+        updateSelected(-1);
+      } else if (DOWN_KEYS.includes(eventObject.which)) {
         eventObject.preventDefault();
-        this.updateSelected(1);
+        updateSelected(1);
       }
     }
   }
 
-  updateSelected = (direction) => {
-    let selected = this.props.search.selected;
+  function updateSelected(direction) {
+    let selected = props.search.selected;
     if (selected === null) {
       selected = -0.5 * direction - 0.5;
     }
     selected += direction;
-    selected += this.props.search.results.length;
-    selected %= this.props.search.results.length;
-    this.props.setSelected(selected);
+    selected += props.search.results.length;
+    selected %= props.search.results.length;
+    props.setSelected(selected);
   }
 
-  render() {
-    const items = [];
-    this.props.search.results.forEach((result, index) => {
-      const item = (
-        <ConnectedResult
-          key={result._id}
-          result={result}
-          index={index}
-        />
-      );
-      items.push(item);
-    });
-    return <ol>{items}</ol>;
-  }
-}
+  const items = [];
+  props.search.results.forEach((result, index) => {
+    const item = (
+      <ConnectedResult
+        key={result._id}
+        result={result}
+        index={index}
+      />
+    );
+    items.push(item);
+  });
+  return <ol>{items}</ol>;
+});
 
 mapStateToProps = (state) => ({
   search: state.search,

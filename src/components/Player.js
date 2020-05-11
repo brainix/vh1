@@ -33,6 +33,7 @@ const Player = React.memo(function Player(props) {
       document.removeEventListener('keyup', onKeyUp);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
+    // eslint-disable-next-line
   }, []);
 
   function onKeyUp(eventObject) {
