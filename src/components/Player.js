@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import '../monkey';
 import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
@@ -68,55 +68,65 @@ let mapDispatchToProps = (dispatch) => ({
 
 const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
-class Buffer extends React.Component {
-  componentDidMount() {
-    this.props.fetchQueue(this.props.artistId, this.props.songId);
-  }
+const Buffer = React.memo(function Buffer(props) {
+  useEffect(() => {
+    props.fetchQueue(props.artistId, props.songId);
+    // eslint-disable-next-line
+  }, []);
 
-  componentDidUpdate(prevProps) {
+  const prevRef = useRef();
+  useEffect(() => {
+    prevRef.current = {
+      prevArtistId: props.artistId,
+      prevSongId: props.songId
+    };
+  });
+  const { prevArtistId, prevSongId } = prevRef.current
+    ? prevRef.current
+    : { prevArtistId: null, prevSongId : null };
+
+  const { artistId, songId } = props;
+  useEffect(() => {
     if (
-      this.props.artistId !== prevProps.artistId
-      || this.props.songId !== prevProps.songId
+      props.history.action !== 'REPLACE'
+      && (prevArtistId !== artistId || prevSongId !== songId)
     ) {
-      if (this.props.history.action !== 'REPLACE') {
-        this.props.fetchQueue(this.props.artistId, this.props.songId);
-      }
+      props.fetchQueue(props.artistId, props.songId);
     }
+    // eslint-disable-next-line
+  }, [artistId, songId]);
+
+  const videos = [];
+  let states;
+
+  if (
+    props.player.index === null
+    || props.player.index > props.player.queue.length - 1
+  ) {
+    states = [];
+  } else if (
+    props.player.index === props.player.queue.length - 1
+    || props.state === 'background'
+  ) {
+    states = [props.state];
+  } else {
+    states = ['playing', 'buffering'];
   }
 
-  render() {
-    const videos = [];
-    let states;
+  states.forEach((state, index) => {
+    const video = props.player.queue[props.player.index + index];
+    videos.push(
+      <ConnectedVideo
+        key={state}
+        video={video}
+        state={state}
+        history={props.history}
+      />
+    );
+  });
 
-    if (
-      this.props.player.index === null
-      || this.props.player.index > this.props.player.queue.length - 1
-    ) {
-      states = [];
-    } else if (
-      this.props.player.index === this.props.player.queue.length - 1
-      || this.props.state === 'background'
-    ) {
-      states = [this.props.state];
-    } else {
-      states = ['playing', 'buffering'];
-    }
-
-    states.forEach((state, index) => {
-      const video = this.props.player.queue[this.props.player.index + index];
-      videos.push(
-        <ConnectedVideo
-          key={state}
-          video={video}
-          state={state}
-          history={this.props.history}
-        />
-      );
-    });
-
-    return <div className="Player">{videos}</div>;
-  }
-}
+  return <div className="Player">{videos}</div>;
+});
 
 mapStateToProps = (state) => ({
   player: state.player,
