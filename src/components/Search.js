@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
@@ -67,19 +67,18 @@ class Input extends React.PureComponent {
     super(props);
     this.GTFO_KEYS = [27];
     this.PORN_QUERIES = [];
-    this.input = null;
+    this.input = createRef();
     this.playing = null;
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
     document.addEventListener('keypress', this.onKeyPress);
-    this.input = document.querySelectorAll('input[type=search]')[0];
   }
 
   componentDidUpdate() {
     if (!this.props.search.query) {
-      this.input.blur();
+      this.input.current.blur();
     }
   }
 
@@ -90,7 +89,7 @@ class Input extends React.PureComponent {
 
   onKeyDown = (eventObject) => {
     if (
-      document.activeElement !== this.input
+      document.activeElement !== this.input.current
       && this.GTFO_KEYS.includes(eventObject.which)
     ) {
       window.location.href = '/gtfo';
@@ -99,8 +98,11 @@ class Input extends React.PureComponent {
 
   onKeyPress = (eventObject) => {
     const c = String.fromCharCode(eventObject.which);
-    if (c && /^[0-9a-z]+$/i.test(c) && document.activeElement !== this.input) {
-      this.input.focus();
+    if (
+      c && /^[0-9a-z]+$/i.test(c)
+      && document.activeElement !== this.input.current
+    ) {
+      this.input.current.focus();
     }
   }
 
@@ -130,7 +132,7 @@ class Input extends React.PureComponent {
     fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
       .catch(console.log);
 
-    if (this.PORN_QUERIES.includes(this.input.value.trimAll())) {
+    if (this.PORN_QUERIES.includes(this.input.current.value.trimAll())) {
       window.location.href = `${process.env.REACT_APP_API}/v1/porn`;
     }
   }
@@ -139,6 +141,7 @@ class Input extends React.PureComponent {
     return (
       <input
         type="search"
+        ref={this.input}
         placeholder="Search"
         maxLength="20"
         autoComplete="off"
