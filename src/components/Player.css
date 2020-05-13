@@ -38,6 +38,11 @@
   cursor: pointer;
 }
 
+.Player video.NotPlaying {
+  opacity: 0.4;
+  cursor: auto;
+}
+
 .Player figure {
   position: fixed;
   bottom: 0;
@@ -54,4 +59,8 @@
 
 .Player figure.Playing {
   opacity: 1.0;
+}
+
+.Player figure.NotPlaying {
+  opacity: 0.0;
 }

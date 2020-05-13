@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { createRef, useEffect } from 'react';
+import React, { useEffect, createRef, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
@@ -62,98 +62,87 @@ let mapDispatchToProps = (dispatch) => ({
 
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
 
-class Input extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.GTFO_KEYS = [27];
-    this.PORN_QUERIES = [];
-    this.input = createRef();
-    this.playing = null;
-  }
+const Input = React.memo(function Input(props) {
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keypress', onKeyPress);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keypress', onKeyPress);
+    };
+  }, []);
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown);
-    document.addEventListener('keypress', this.onKeyPress);
-  }
+  const inputRef = createRef();
+  const prevInputRef = useRef();
+  useEffect(() => {
+    prevInputRef.current = inputRef.current;
+  });
 
-  componentDidUpdate() {
-    if (!this.props.search.query) {
-      this.input.current.blur();
+  const { query } = props.search;
+  useEffect(() => {
+    if (!query) {
+      prevInputRef.current.blur();
     }
-  }
+  }, [query]);
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown);
-    document.removeEventListener('keypress', this.onKeyPress);
-  }
-
-  onKeyDown = (eventObject) => {
+  function onKeyDown(eventObject) {
+    const GTFO_KEYS = [27];
     if (
-      document.activeElement !== this.input.current
-      && this.GTFO_KEYS.includes(eventObject.which)
+      document.activeElement !== prevInputRef.current
+      && GTFO_KEYS.includes(eventObject.which)
     ) {
       window.location.href = '/gtfo';
     }
   }
 
-  onKeyPress = (eventObject) => {
+  function onKeyPress(eventObject) {
     const c = String.fromCharCode(eventObject.which);
     if (
-      c && /^[0-9a-z]+$/i.test(c)
-      && document.activeElement !== this.input.current
+      document.activeElement !== prevInputRef.current
+      && c && /^[0-9a-z]+$/i.test(c)
     ) {
-      this.input.current.focus();
+      prevInputRef.current.focus();
     }
   }
 
-  onFocus = () => {
+  function onFocus() {
     const playing = document.querySelectorAll('.Playing');
-    if (playing) {
-      this.playing = playing;
-      this.playing.forEach((element) => {
-        element.classList.remove('Playing');
-      });
-    }
+    playing.forEach((element) => {
+      element.classList.add('NotPlaying');
+    });
   }
 
-  onBlur = () => {
-    if (this.playing) {
-      this.playing.forEach((element) => {
-        element.classList.add('Playing');
-      });
-    };
+  function onBlur() {
+    const notPlaying = document.querySelectorAll('.NotPlaying');
+    notPlaying.forEach((element) => {
+      element.classList.remove('NotPlaying');
+    });
   }
 
-  onChange = (eventObject) => {
+  function onChange(eventObject) {
     const query = eventObject.target.value;
-    this.props.executeSearch(query);
+    props.executeSearch(query);
     const [method, body] = ['POST', new FormData()];
     body.append('q', query);
     fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
       .catch(console.log);
-
-    if (this.PORN_QUERIES.includes(this.input.current.value.trimAll())) {
-      window.location.href = `${process.env.REACT_APP_API}/v1/porn`;
-    }
   }
 
-  render() {
-    return (
-      <input
-        type="search"
-        ref={this.input}
-        placeholder="Search"
-        maxLength="20"
-        autoComplete="off"
-        spellCheck="false"
-        value={this.props.search.query}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        onChange={this.onChange}
-      />
-    );
-  }
-}
+  return (
+    <input
+      type="search"
+      ref={inputRef}
+      placeholder="Search"
+      maxLength="20"
+      autoComplete="off"
+      spellCheck="false"
+      value={props.search.query}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onChange={onChange}
+    />
+  );
+});
 
 mapStateToProps = (state) => ({
   search: state.search,
