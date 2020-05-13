@@ -76,7 +76,8 @@ const Input = React.memo(function Input(props) {
   const prevInputRef = useRef();
   useEffect(() => {
     prevInputRef.current = inputRef.current;
-  });
+    // eslint-disable-next-line
+  }, []);
 
   const { query } = props.search;
   useEffect(() => {
