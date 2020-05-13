@@ -69,11 +69,6 @@ let mapDispatchToProps = (dispatch) => ({
 const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
 const Buffer = React.memo(function Buffer(props) {
-  useEffect(() => {
-    props.fetchQueue(props.artistId, props.songId);
-    // eslint-disable-next-line
-  }, []);
-
   const prevRef = useRef();
   useEffect(() => {
     prevRef.current = {
@@ -91,14 +86,12 @@ const Buffer = React.memo(function Buffer(props) {
       props.history.action !== 'REPLACE'
       && (prevArtistId !== artistId || prevSongId !== songId)
     ) {
-      props.fetchQueue(props.artistId, props.songId);
+      props.fetchQueue(artistId, songId);
     }
     // eslint-disable-next-line
   }, [artistId, songId]);
 
-  const videos = [];
   let states;
-
   if (
     props.player.index === null
     || props.player.index > props.player.queue.length - 1
@@ -113,6 +106,7 @@ const Buffer = React.memo(function Buffer(props) {
     states = ['playing', 'buffering'];
   }
 
+  const videos = [];
   states.forEach((state, index) => {
     const video = props.player.queue[props.player.index + index];
     videos.push(
@@ -124,7 +118,6 @@ const Buffer = React.memo(function Buffer(props) {
       />
     );
   });
-
   return <div className="Player">{videos}</div>;
 });
 
