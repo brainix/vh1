@@ -29,6 +29,7 @@ const Player = React.memo(function Player(props) {
   useEffect(() => {
     document.addEventListener('keyup', onKeyUp);
     document.addEventListener('visibilitychange', onVisibilityChange);
+    document.activeElement.blur();
     return () => {
       document.removeEventListener('keyup', onKeyUp);
       document.removeEventListener('visibilitychange', onVisibilityChange);
@@ -40,7 +41,7 @@ const Player = React.memo(function Player(props) {
     const NEXT_KEYS = [39];
     const PREV_KEYS = [37];
 
-    if (document.activeElement === document.body) {
+    if (document.activeElement === document.body && props.state === 'playing') {
       if (NEXT_KEYS.includes(eventObject.which)) {
         props.nextVideo();
       } else if (PREV_KEYS.includes(eventObject.which)) {
