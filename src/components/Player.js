@@ -69,18 +69,19 @@ let mapDispatchToProps = (dispatch) => ({
 const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
 const Buffer = React.memo(function Buffer(props) {
+  const { artistId, songId } = props;
   const prevRef = useRef();
   useEffect(() => {
     prevRef.current = {
       prevArtistId: props.artistId,
       prevSongId: props.songId
     };
-  });
+    // eslint-disable-next-line
+  }, [artistId, songId]);
   const { prevArtistId, prevSongId } = prevRef.current
     ? prevRef.current
     : { prevArtistId: null, prevSongId : null };
 
-  const { artistId, songId } = props;
   useEffect(() => {
     if (
       props.history.action !== 'REPLACE'
