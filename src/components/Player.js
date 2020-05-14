@@ -130,15 +130,15 @@ mapDispatchToProps = (dispatch) => ({
 const ConnectedBuffer = connect(mapStateToProps, mapDispatchToProps)(Buffer);
 
 const Video = React.memo(function Video(props) {
-  function updateUrlAndTitle() {
-    if (props.state === 'playing') {
-      const { artist__id, song__id, artist, song } = props.video;
+  const { state } = props;
+  const { artist__id, song__id, artist, song } = props.video;
+  useEffect(() => {
+    if (state === 'playing') {
       props.history.replace(`/${artist__id}/${song__id}`);
       document.title = `Spool - ${artist} - ${song}`;
     }
-  }
-
-  useEffect(updateUrlAndTitle);
+    // eslint-disable-next-line
+  }, [state, artist__id, song__id, artist, song]);
 
   function onMouseDown(eventObject) {
     if (props.state === 'playing') {
