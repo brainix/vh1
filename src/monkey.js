@@ -36,12 +36,16 @@ String.prototype.htmlToText = function () {
     .replace(/\&mdash;/ig, '-');
 };
 
-String.prototype.cleanName = function () {
-  return this.replace(/\([^()]*\)|\[[^[\]]*\]|\{[^{}]*\}/g, '')
-    .replace(/'/g, '&rsquo;')
+String.prototype.textToHtml = function () {
+  return this.replace(/'/g, '&rsquo;')
     .replace(/"(.*)"/g, '&ldquo;$1&rdquo;')
     .replace(/(\W)-+(\W)/g, '$1&mdash;$2')
     .replace(/\.{3}/g, '&hellip;');
+}
+
+String.prototype.cleanName = function () {
+  return this.replace(/\([^()]*\)|\[[^[\]]*\]|\{[^{}]*\}/g, '')
+    .textToHtml();
 };
 
 Array.prototype.choice = function () {
