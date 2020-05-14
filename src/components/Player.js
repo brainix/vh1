@@ -69,12 +69,12 @@ let mapDispatchToProps = (dispatch) => ({
 const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
 const Buffer = React.memo(function Buffer(props) {
-  const [prevArtistId, setPrevArtistId] = useState(null);
-  const [prevSongId, setPrevSongId] = useState(null);
+  const [prevArtistId, setPrevArtistId] = useState(undefined);
+  const [prevSongId, setPrevSongId] = useState(undefined);
   const { artistId, songId } = props;
   useEffect(() => {
     if (
-      prevArtistId === null || prevSongId === null
+      !props.player.queue.length
       || (props.history.action !== 'REPLACE' && (prevArtistId !== artistId || prevSongId !== songId))
     ) {
       props.fetchQueue(artistId, songId);
