@@ -225,7 +225,7 @@ const Result = React.memo(function Result(props) {
   const selected = props.index === props.search.selected;
   const style = { textDecoration: selected ? 'underline' : null };
   const html = `${artist.textToHtml()} &mdash; ${song.textToHtml()}`;
-  const title = `${artist} - ${song}`;
+  const title = `${artist.htmlToText()} - ${song.htmlToText()}`;
 
   return (
     <li>
