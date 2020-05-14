@@ -26,7 +26,7 @@ function getQueries() {
   fetch(`${process.env.REACT_APP_API}/v1/queries`)
     .then((response) => response.json())
     .then((data) => cacheQueries(data.queries))
-    .catch(console.log);
+    .catch(console.error);
 }
 
 function cacheQueries(queries) {
@@ -34,7 +34,7 @@ function cacheQueries(queries) {
     const query = queries.shift();
     const urlQueryString = querystring.stringify({ q: query });
     fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-      .catch(console.log)
+      .catch(console.error)
       .finally(() => cacheQueries(queries));
   }
 }

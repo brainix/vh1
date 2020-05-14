@@ -61,7 +61,7 @@ const fetchRandomSongs = () => {
             dispatch(nextVideo());
           }
         })
-        .catch(console.log);
+        .catch(console.error);
     }
   };
 }
@@ -77,7 +77,7 @@ export const fetchQueue = (artistId = null, songId = null) => {
           dispatch(extendQueue(data.songs));
           dispatch(fetchRandomSongs());
         })
-        .catch(console.log);
+        .catch(console.error);
     } else {
       dispatch(fetchRandomSongs());
     }

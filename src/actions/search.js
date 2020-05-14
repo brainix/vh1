@@ -41,7 +41,7 @@ export const executeSearch = (query) => {
             dispatch(showResults(data.songs));
           }
         })
-        .catch(console.log);
+        .catch(console.error);
       } else {
         dispatch(clearSearch());
       }

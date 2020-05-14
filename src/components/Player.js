@@ -74,10 +74,14 @@ const Buffer = React.memo(function Buffer(props) {
   const [prevSongId, setPrevSongId] = useState(undefined);
   const { artistId, songId } = props;
   useEffect(() => {
-    if (
-      !props.player.queue.length
-      || (props.history.action !== 'REPLACE' && (prevArtistId !== artistId || prevSongId !== songId))
+    if (!props.player.queue.length) {
+      console.log('The queue is empty; fetching videos');
+      props.fetchQueue(artistId, songId);
+    } else if (
+      props.history.action !== 'REPLACE'
+      && (prevArtistId !== artistId || prevSongId !== songId)
     ) {
+      console.log('The artist ID or song ID has changed; fetching videos');
       props.fetchQueue(artistId, songId);
     }
     setPrevArtistId(artistId);
