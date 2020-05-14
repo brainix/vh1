@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import '../monkey';
 import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
@@ -69,22 +69,14 @@ let mapDispatchToProps = (dispatch) => ({
 const ConnectedPlayer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
 const Buffer = React.memo(function Buffer(props) {
+  const [prevArtistId, setPrevArtistId] = useState(null);
+  const [prevSongId, setPrevSongId] = useState(null);
   const { artistId, songId } = props;
-  const prevRef = useRef();
   useEffect(() => {
-    prevRef.current = {
-      prevArtistId: props.artistId,
-      prevSongId: props.songId
-    };
-    // eslint-disable-next-line
-  }, [artistId, songId]);
-  const { prevArtistId, prevSongId } = prevRef.current
-    ? prevRef.current
-    : { prevArtistId: null, prevSongId : null };
-
-  useEffect(() => {
+    setPrevArtistId(artistId);
+    setPrevSongId(songId);
     if (
-      props.history.action !== 'REPLACE'
+      props.history.action !== 'REPLACE' && props.state !== 'background'
       && (prevArtistId !== artistId || prevSongId !== songId)
     ) {
       props.fetchQueue(artistId, songId);
