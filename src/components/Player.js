@@ -73,14 +73,14 @@ const Buffer = React.memo(function Buffer(props) {
   const [prevSongId, setPrevSongId] = useState(null);
   const { artistId, songId } = props;
   useEffect(() => {
-    setPrevArtistId(artistId);
-    setPrevSongId(songId);
     if (
-      props.history.action !== 'REPLACE' && props.state !== 'background'
-      && (prevArtistId !== artistId || prevSongId !== songId)
+      prevArtistId === null || prevSongId === null
+      || (props.history.action !== 'REPLACE' && (prevArtistId !== artistId || prevSongId !== songId))
     ) {
       props.fetchQueue(artistId, songId);
     }
+    setPrevArtistId(artistId);
+    setPrevSongId(songId);
     // eslint-disable-next-line
   }, [artistId, songId]);
 
