@@ -37,9 +37,9 @@ String.prototype.htmlToText = function () {
 };
 
 String.prototype.textToHtml = function () {
-  return this.replace(/'/g, '&rsquo;')
+  return this.replace(/(\W)-+(\W)/g, '$1&mdash;$2')
+    .replace(/'/g, '&rsquo;')
     .replace(/"(.*)"/g, '&ldquo;$1&rdquo;')
-    .replace(/(\W)-+(\W)/g, '$1&mdash;$2')
     .replace(/\.{3}/g, '&hellip;');
 }
 
