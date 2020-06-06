@@ -40,7 +40,7 @@ function cacheQueries(queries) {
 }
 
 const Precache = React.memo(function Precache() {
-  // useEffect(getQueries);
+  useEffect(getQueries);
 
   return null;
 });
