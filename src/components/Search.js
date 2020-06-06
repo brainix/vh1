@@ -181,7 +181,7 @@ const Results = React.memo(function Results(props) {
   }
 
   function updateSelected(direction) {
-    let selected = props.search.selected;
+    let { selected } = props.search;
     if (selected === null) {
       selected = -0.5 * direction - 0.5;
     }
