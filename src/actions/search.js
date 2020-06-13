@@ -39,6 +39,11 @@ export const executeSearch = (query) => {
         .then((data) => {
           if (data.metadata.q === store.getState().search.query) {
             dispatch(showResults(data.songs));
+
+            const [method, body] = ['POST', new FormData()];
+            body.append('q', query);
+            fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
+              .catch(console.error);
           }
         })
         .catch(console.error);

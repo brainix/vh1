@@ -123,13 +123,6 @@ const Input = React.memo(function Input(props) {
   function onChange(eventObject) {
     const query = eventObject.target.value;
     props.executeSearch(query);
-
-    if (query) {
-      const [method, body] = ['POST', new FormData()];
-      body.append('q', query);
-      fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
-        .catch(console.error);
-    }
   }
 
   return (
