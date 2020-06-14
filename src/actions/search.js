@@ -20,6 +20,8 @@
 
 import store from '../store';
 
+const querystring = require('querystring');
+
 export const SET_QUERY = 'SET_QUERY';
 export const SHOW_RESULTS = 'SHOW_RESULTS';
 export const SET_SELECTED = 'SET_SELECTED';
@@ -34,7 +36,9 @@ export const executeSearch = (query) => {
   return (dispatch) => {
     if (query) {
       dispatch(setQuery(query));
-      fetch(`${process.env.REACT_APP_API}/v1/songs/search?q=${query}`)
+
+      const urlQueryString = querystring.stringify({ q: query });
+      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.metadata.q === store.getState().search.query) {
