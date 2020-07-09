@@ -152,20 +152,19 @@ mapDispatchToProps = (dispatch) => ({
 const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 
 const Results = React.memo(function Results(props) {
-  const { search } = props;
+  const { results, selected } = props.search;
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
     // eslint-disable-next-line
-  }, [search]);
+  }, [results, selected]);
 
   function onKeyDown(eventObject) {
     const UP_KEYS = [38];
     const DOWN_KEYS = [40];
-
-    if (props.search.results.length) {
+    if (results.length) {
       if (UP_KEYS.includes(eventObject.which)) {
         eventObject.preventDefault();
         updateSelected(-1);
@@ -177,18 +176,18 @@ const Results = React.memo(function Results(props) {
   }
 
   function updateSelected(direction) {
-    let { selected } = props.search;
-    if (selected === null) {
-      selected = -0.5 * direction - 0.5;
+    let newSelected = selected;
+    if (newSelected === null) {
+      newSelected = -0.5 * direction - 0.5;
     }
-    selected += direction;
-    selected += props.search.results.length;
-    selected %= props.search.results.length;
-    props.setSelected(selected);
+    newSelected += direction;
+    newSelected += results.length;
+    newSelected %= results.length;
+    props.setSelected(newSelected);
   }
 
   const items = [];
-  props.search.results.forEach((result, index) => {
+  results.forEach((result, index) => {
     const item = (
       <ConnectedResult key={result._id} result={result} index={index} />
     );
