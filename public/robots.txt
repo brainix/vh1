@@ -8,3 +8,5 @@ Disallow: /harm/to/self
 # Yoshimi
 Disallow: /robots/eat/me
 Disallow: /robots/defeat/me
+
+Sitemap: https://api.spool.video/sitemap.xml
