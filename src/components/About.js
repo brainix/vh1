@@ -55,9 +55,6 @@ const About = React.memo(function About(props) {
           (<a href='mailto:brainix@gmail.com'>brainix@gmail.com</a>),
           or have coffee with me any time in San Francisco.
         </p>
-
-        // Temporary to verify Sentry setup:
-        <button onClick={methodDoesNotExist}>Break the world</button>
       </section>
     </>
   );
