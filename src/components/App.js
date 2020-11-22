@@ -19,18 +19,40 @@
 \*---------------------------------------------------------------------------*/
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
+
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
+
 import store from '../store';
 import About from './About';
 import Home from './Home';
 import Logo from './Logo';
 import Precache from './Precache';
 
+const history = createBrowserHistory();
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: "https://ac4fccd7346c4547a5a0592a390f1182@o476106.ingest.sentry.io/5516489",
+    integrations: [
+      new Integrations.BrowserTracing({
+        routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+      }),
+    ],
+
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 1.0,
+  });
+}
+
 const App = React.memo(function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/:artistId/:songId" component={Home} />
@@ -43,4 +65,4 @@ const App = React.memo(function App() {
   );
 });
 
-export default App;
+export default Sentry.withProfiler(App);

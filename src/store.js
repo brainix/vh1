@@ -18,10 +18,16 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import * as Sentry from "@sentry/react";
 import reducers from './reducers/reducers';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({});
+
+const store = createStore(
+  reducers,
+  compose(applyMiddleware(thunk), sentryReduxEnhancer),
+);
 
 export default store;
