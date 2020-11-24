@@ -21,11 +21,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 import store from '../store';
 import About from './About';
 import Home from './Home';
 import Logo from './Logo';
 import Precache from './Precache';
+
 
 const App = React.memo(function App() {
   return (
