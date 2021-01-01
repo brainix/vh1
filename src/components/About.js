@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*\
  |  About.js                                                                 |
  |                                                                           |
- |  Copyright © 2017-2020, Rajiv Bakulesh Shah, original author.             |
+ |  Copyright © 2017-2021, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
  |      This program is free software: you can redistribute it and/or modify |
  |      it under the terms of the GNU General Public License as published by |
