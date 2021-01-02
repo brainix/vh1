@@ -37,19 +37,6 @@ const App = React.memo(function App() {
           <Route exact path="/" component={Home} />
           <Route path="/:artistId/:songId" component={Home} />
           <Route exact path="/wtf" component={About} />
-
-          <Route exact path="/gtfo">
-            {() => {
-              window.location.href = 'http://redirects.spool.video/v1/gtfo';
-            }}
-          </Route>
-
-          <Route exact path="/porn">
-            {() => {
-              window.location.href = 'http://redirects.spool.video/v1/porn';
-            }}
-          </Route>
-
         </Switch>
         <Route component={Logo} />
       </Router>
