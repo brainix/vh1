@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect, createRef, useRef } from 'react';
+import React, { useEffect, useCallback, createRef, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../requestAnimationFrame';
@@ -32,18 +32,19 @@ const Search = React.memo(function Search(props) {
     // eslint-disable-next-line
   }, []);
 
-  function onSubmit(eventObject) {
+  const { results, selected } = props.search;
+  const navigateToResult = useCallback((eventObject) => {
     eventObject.preventDefault();
-    if (props.search.results && props.search.selected !== null) {
-      const { artist__id, song__id } = props.search.results[props.search.selected];
+    if (results && selected !== null) {
+      const { artist__id, song__id } = results[selected];
       const target = `/${artist__id}/${song__id}`;
       props.history.push(target);
       props.clearSearch();
     }
-  }
+  }, [selected]);
 
   return (
-    <form className="Search" onSubmit={onSubmit}>
+    <form className="Search" onSubmit={navigateToResult}>
       <fieldset>
         <ConnectedInput />
       </fieldset>
