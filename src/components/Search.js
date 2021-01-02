@@ -65,11 +65,11 @@ const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 const Input = React.memo(function Input(props) {
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keypress', onKeyPress);
+    document.addEventListener('keydown', easterEgg);
+    document.addEventListener('keypress', focusSearchOnKeyPress);
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('keypress', onKeyPress);
+      document.removeEventListener('keydown', easterEgg);
+      document.removeEventListener('keypress', focusSearchOnKeyPress);
     };
   }, []);
 
@@ -87,7 +87,7 @@ const Input = React.memo(function Input(props) {
     }
   }, [query]);
 
-  function onKeyDown(eventObject) {
+  const easterEgg = useCallback((eventObject) => {
     const GTFO_KEYS = [27];
     if (
       document.activeElement !== prevInputRef.current
@@ -95,9 +95,9 @@ const Input = React.memo(function Input(props) {
     ) {
       window.location.href = '/gtfo';
     }
-  }
+  }, []);
 
-  function onKeyPress(eventObject) {
+  const focusSearchOnKeyPress = useCallback((eventObject) => {
     const c = String.fromCharCode(eventObject.which);
     if (
       document.activeElement !== prevInputRef.current
@@ -105,7 +105,7 @@ const Input = React.memo(function Input(props) {
     ) {
       prevInputRef.current.focus();
     }
-  }
+  }, []);
 
   function onFocus() {
     const playing = document.querySelectorAll('.Playing');
