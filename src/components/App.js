@@ -41,12 +41,14 @@ const App = React.memo(function App() {
           <Route exact path="/gtfo">
             {() => {
               window.location.href = 'http://redirects.spool.video/v1/gtfo';
+              return null;
             }}
           </Route>
 
           <Route exact path="/porn">
             {() => {
               window.location.href = 'http://redirects.spool.video/v1/porn';
+              return null;
             }}
           </Route>
 
