@@ -18,7 +18,7 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import '../monkey';
 import { previousVideo, nextVideo, fetchQueue } from '../actions/player';
@@ -27,17 +27,17 @@ import './Player.css';
 
 const Player = React.memo(function Player(props) {
   useEffect(() => {
-    document.addEventListener('keyup', onKeyUp);
-    document.addEventListener('visibilitychange', onVisibilityChange);
+    document.addEventListener('keyup', nextVideo);
+    document.addEventListener('visibilitychange', togglePlayPause);
     document.activeElement.blur();
     return () => {
-      document.removeEventListener('keyup', onKeyUp);
-      document.removeEventListener('visibilitychange', onVisibilityChange);
+      document.removeEventListener('keyup', nextVideo);
+      document.removeEventListener('visibilitychange', togglePlayPause);
     };
     // eslint-disable-next-line
   }, []);
 
-  function onKeyUp(eventObject) {
+  function nextVideo(eventObject) {
     const NEXT_KEYS = [39];
     const PREV_KEYS = [37];
 
@@ -50,7 +50,7 @@ const Player = React.memo(function Player(props) {
     }
   }
 
-  function onVisibilityChange() {
+  function togglePlayPause() {
     const video = document.getElementsByTagName('video')[0];
     if (video) {
       video[document.hidden ? 'pause' : 'play']();
@@ -140,17 +140,17 @@ const Video = React.memo(function Video(props) {
     // eslint-disable-next-line
   }, [state, artist__id, song__id, artist, song]);
 
-  function onMouseDown(eventObject) {
+  const nextVideo = useCallback((eventObject) => {
     if (props.state === 'playing') {
       if (eventObject.target.paused) {
-        eventObject.target.play().catch(() => props.nextVideo());
+        eventObject.target.play().catch(props.nextVideo);
       } else if (document.activeElement === document.body) {
         props.nextVideo();
       } else {
         props.clearSearch();
       }
     }
-  }
+  }, []);
 
   const className = props.state.capitalize();
   return (
@@ -163,7 +163,7 @@ const Video = React.memo(function Video(props) {
         autoPlay={props.state === 'buffering' ? null : 'autoplay'}
         muted={props.state !== 'playing'}
         playsInline
-        onMouseDown={onMouseDown}
+        onMouseDown={nextVideo}
       />
       <Credits video={props.video} state={props.state} />
     </>
