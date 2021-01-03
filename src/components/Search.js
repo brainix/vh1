@@ -65,11 +65,9 @@ const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 const Input = React.memo(function Input(props) {
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keypress', onKeyPress);
+    document.addEventListener('keypress', focusSearch);
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('keypress', onKeyPress);
+      document.removeEventListener('keypress', focusSearch);
     };
   }, []);
 
@@ -87,17 +85,7 @@ const Input = React.memo(function Input(props) {
     }
   }, [query]);
 
-  function onKeyDown(eventObject) {
-    const GTFO_KEYS = [27];
-    if (
-      document.activeElement !== prevInputRef.current
-      && GTFO_KEYS.includes(eventObject.which)
-    ) {
-      window.location.href = '/gtfo';
-    }
-  }
-
-  function onKeyPress(eventObject) {
+  function focusSearch(eventObject) {
     const c = String.fromCharCode(eventObject.which);
     if (
       document.activeElement !== prevInputRef.current
@@ -107,24 +95,24 @@ const Input = React.memo(function Input(props) {
     }
   }
 
-  function onFocus() {
+  const dimVideo = useCallback((eventObject) => {
     const playing = document.querySelectorAll('.Playing');
     playing.forEach((element) => {
       element.classList.add('NotPlaying');
     });
-  }
+  }, []);
 
-  function onBlur() {
+  const brightenVideo = useCallback((eventObject) => {
     const notPlaying = document.querySelectorAll('.NotPlaying');
     notPlaying.forEach((element) => {
       element.classList.remove('NotPlaying');
     });
-  }
+  }, []);
 
-  function onChange(eventObject) {
+  const executeSearch = useCallback((eventObject) => {
     const query = eventObject.target.value;
     props.executeSearch(query);
-  }
+  }, []);
 
   return (
     <input
@@ -135,9 +123,9 @@ const Input = React.memo(function Input(props) {
       autoComplete="off"
       spellCheck="false"
       value={props.search.query}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onChange={onChange}
+      onFocus={dimVideo}
+      onBlur={brightenVideo}
+      onChange={executeSearch}
     />
   );
 });
@@ -155,14 +143,14 @@ const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
 const Results = React.memo(function Results(props) {
   const { results, selected } = props.search;
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', scrollThroughResults);
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keydown', scrollThroughResults);
     };
     // eslint-disable-next-line
   }, [results, selected]);
 
-  function onKeyDown(eventObject) {
+  function scrollThroughResults(eventObject) {
     const UP_KEYS = [38];
     const DOWN_KEYS = [40];
     if (results.length) {
@@ -208,13 +196,9 @@ mapDispatchToProps = (dispatch) => ({
 const ConnectedResults = connect(mapStateToProps, mapDispatchToProps)(Results);
 
 const Result = React.memo(function Result(props) {
-  function onMouseEnter() {
+  const selectResult = useCallback(() => {
     props.setSelected(props.index);
-  }
-
-  function onClick() {
-    props.clearSearch();
-  }
+  }, []);
 
   const { artist__id, song__id, artist, song } = props.result;
   const target = `/${artist__id}/${song__id}`;
@@ -230,8 +214,8 @@ const Result = React.memo(function Result(props) {
         style={style}
         dangerouslySetInnerHTML={{ __html: html }}
         title={title}
-        onMouseEnter={onMouseEnter}
-        onClick={onClick}
+        onMouseEnter={selectResult}
+        onClick={props.clearSearch}
       />
     </li>
   );
