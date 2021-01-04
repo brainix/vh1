@@ -28,26 +28,27 @@ export const setSelected = (index) => ({ type: 'search/setSelected', index });
 export const clearSearch = () => ({ type: 'search/clearSearch' });
 
 export const executeSearch = (query) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     if (query) {
       dispatch(setQuery(query));
 
-      const urlQueryString = querystring.stringify({ q: query });
-      fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.metadata.q === store.getState().search.query) {
-            dispatch(showResults(data.songs));
+      try {
+        const urlQueryString = querystring.stringify({ q: query });
+        const response = await fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`);
+        const data = await response.json();
+        if (data.metadata.q === store.getState().search.query) {
+          dispatch(showResults(data.songs));
 
-            const [method, body] = ['POST', new FormData()];
-            body.append('q', query);
-            fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body })
-              .catch(console.error);
-          }
-        })
-        .catch(console.error);
-      } else {
-        dispatch(clearSearch());
+          const [method, body] = ['POST', new FormData()];
+          body.append('q', query);
+          await fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body });
+        }
+      } catch(e) {
+        console.error(e);
       }
+
+    } else {
+      dispatch(clearSearch());
+    }
   };
 }

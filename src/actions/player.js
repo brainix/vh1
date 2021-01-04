@@ -46,35 +46,36 @@ export const nextVideo = () => {
 }
 
 const fetchRandomSongs = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     if (videosRemaining() <= BATCH_SIZE / 2) {
-      fetch(`${process.env.REACT_APP_API}/v1/songs`)
-        .then((response) => response.json())
-        .then((data) => dispatch(extendQueue(data.songs.shuffle())))
-        .then(() => {
-          if (store.getState().player.index === null) {
-            dispatch(nextVideo());
-          }
-        })
-        .catch(console.error);
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API}/v1/songs`);
+        const data = await response.json();
+        const songs = data.songs.shuffle();
+        dispatch(extendQueue(songs));
+      } catch(e) {
+        console.error(e);
+      }
+      if (store.getState().player.index === null) {
+        dispatch(nextVideo());
+      }
     }
   };
 }
 
 export const fetchQueue = (artistId = null, songId = null) => {
   // TODO: Throw an error if artistId is null but songId isn't, or vice versa.
-  return (dispatch) => {
+  return async (dispatch) => {
     if (artistId !== null && songId !== null) {
       dispatch(clearQueue());
-      fetch(`${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          dispatch(extendQueue(data.songs));
-          dispatch(fetchRandomSongs());
-        })
-        .catch(console.error);
-    } else {
-      dispatch(fetchRandomSongs());
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`);
+        const data = await response.json();
+        dispatch(extendQueue(data.songs));
+      } catch(e) {
+        console.error(e);
+      }
     }
+    dispatch(fetchRandomSongs());
   };
 }
