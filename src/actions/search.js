@@ -22,15 +22,10 @@ import store from '../store';
 
 const querystring = require('querystring');
 
-export const SET_QUERY = 'SET_QUERY';
-export const SHOW_RESULTS = 'SHOW_RESULTS';
-export const SET_SELECTED = 'SET_SELECTED';
-export const CLEAR_SEARCH = 'CLEAR_SEARCH';
-
-const setQuery = (query) => ({ type: SET_QUERY, query });
-const showResults = (results) => ({ type: SHOW_RESULTS, results });
-export const setSelected = (index) => ({ type: SET_SELECTED, index });
-export const clearSearch = () => ({ type: CLEAR_SEARCH });
+const setQuery = (query) => ({ type: 'search/setQuery', query });
+const showResults = (results) => ({ type: 'search/showResults', results });
+export const setSelected = (index) => ({ type: 'search/setSelected', index });
+export const clearSearch = () => ({ type: 'search/clearSearch' });
 
 export const executeSearch = (query) => {
   return (dispatch) => {

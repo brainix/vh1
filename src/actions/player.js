@@ -20,17 +20,12 @@
 
 import store from '../store';
 
-export const CLEAR_QUEUE = 'CLEAR_QUEUE';
-export const EXTEND_QUEUE = 'EXTEND_QUEUE';
-export const PREVIOUS_VIDEO = 'PREVIOUS_VIDEO';
-export const NEXT_VIDEO = 'NEXT_VIDEO';
-
 const BATCH_SIZE = 60;
 
-const clearQueue = () => ({ type: CLEAR_QUEUE });
-const extendQueue = (queue) => ({ type: EXTEND_QUEUE, queue });
-export const previousVideo = () => ({ type: PREVIOUS_VIDEO });
-const nextVideoAction = () => ({ type: NEXT_VIDEO });
+const clearQueue = () => ({ type: 'player/clearQueue' });
+const extendQueue = (queue) => ({ type: 'player/extendQueue', queue });
+export const previousVideo = () => ({ type: 'player/previousVideo' });
+const nextVideoAction = () => ({ type: 'player/nextVideo' });
 
 const videosRemaining = () => {
   const queueLength = store.getState().player.queue.length;

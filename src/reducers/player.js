@@ -18,15 +18,13 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { CLEAR_QUEUE, EXTEND_QUEUE, PREVIOUS_VIDEO, NEXT_VIDEO } from '../actions/player';
-
 const playerReducer = (state = {queue: [], index: null}, action) => {
   switch (action.type) {
-    case CLEAR_QUEUE:
+    case 'player/clearQueue':
       return { queue: [], index: null };
-    case EXTEND_QUEUE:
+    case 'player/extendQueue':
       return { ...state, queue: state.queue.concat(action.queue) };
-    case PREVIOUS_VIDEO:
+    case 'player/previousVideo':
       if (!state.queue.length) {
         // The queue is empty; we cannot move on to the previous video.
         return state;
@@ -40,7 +38,7 @@ const playerReducer = (state = {queue: [], index: null}, action) => {
       } else {
         return { ...state, index: state.index - 1 }
       }
-    case NEXT_VIDEO:
+    case 'player/nextVideo':
       if (!state.queue.length) {
         // The queue is empty; we cannot move on to the next video.
         return state;

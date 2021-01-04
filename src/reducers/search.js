@@ -18,17 +18,15 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import { SET_QUERY, SHOW_RESULTS, SET_SELECTED, CLEAR_SEARCH } from '../actions/search';
-
 const searchReducer = (state = { query: '', results: [], selected: null }, action) => {
   switch (action.type) {
-    case SET_QUERY:
+    case 'search/setQuery':
       return { ...state, query: action.query, selected: null };
-    case SHOW_RESULTS:
+    case 'search/showResults':
       return { ...state, results: action.results, selected: null };
-    case SET_SELECTED:
+    case 'search/setSelected':
       return { ...state, selected: action.index };
-    case CLEAR_SEARCH:
+    case 'search/clearSearch':
       return { query: '', results: [], selected: null };
     default:
       return state;
