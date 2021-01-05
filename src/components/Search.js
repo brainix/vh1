@@ -33,7 +33,7 @@ const Search = React.memo(function Search(props) {
   }, []);
 
   const { results, selected } = props.search;
-  const navigateToResult = useCallback((eventObject) => {
+  const navigateToSelectedResult = useCallback((eventObject) => {
     eventObject.preventDefault();
     if (results && selected !== null) {
       const { artist__id, song__id } = results[selected];
@@ -41,10 +41,10 @@ const Search = React.memo(function Search(props) {
       props.history.push(target);
       props.clearSearch();
     }
-  }, [selected]);
+  }, [results, selected]);
 
   return (
-    <form className="Search" onSubmit={navigateToResult}>
+    <form className="Search" onSubmit={navigateToSelectedResult}>
       <fieldset>
         <ConnectedInput />
       </fieldset>
