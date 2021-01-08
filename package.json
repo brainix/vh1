@@ -5,7 +5,7 @@
   "dependencies": {
     "@sentry/react": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
-    "npm": "^7.3.0",
+    "npm": "^7.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -22,7 +22,7 @@
   },
   "engines": {
     "node": "15.5.1",
-    "npm": "7.3.0"
+    "npm": "7.4.0"
   },
   "browserslist": [
     ">0.2%",
