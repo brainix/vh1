@@ -34,7 +34,8 @@ export const executeSearch = (query) => {
 
       try {
         const urlQueryString = querystring.stringify({ q: query });
-        const response = await fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`);
+        const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
+        const response = await fetch(url);
         const data = await response.json();
         if (data.metadata.q === store.getState().search.query) {
           dispatch(showResults(data.songs));

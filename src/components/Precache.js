@@ -22,25 +22,34 @@ import React, { useEffect } from 'react';
 
 const querystring = require('querystring');
 
-function getQueries() {
-  fetch(`${process.env.REACT_APP_API}/v1/queries`)
-    .then((response) => response.json())
-    .then((data) => cacheQueries(data.queries))
-    .catch(console.error);
+async function getQueries() {
+  try {
+    const url = `${process.env.REACT_APP_API}/v1/queries`;
+    const response = await fetch(url);
+    const data = await response.json();
+    cacheQueries(data.queries);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
-function cacheQueries(queries) {
+async function cacheQueries(queries) {
   if (queries.length) {
     const query = queries.shift();
     const urlQueryString = querystring.stringify({ q: query });
-    fetch(`${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`)
-      .catch(console.error)
-      .finally(() => cacheQueries(queries));
+    const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
+    try {
+      const response = await fetch(url);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      cacheQueries(queries);
+    }
   }
 }
 
 const Precache = React.memo(function Precache() {
-  useEffect(getQueries);
+  useEffect(getQueries, []);
 
   return null;
 });
