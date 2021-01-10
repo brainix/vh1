@@ -49,7 +49,8 @@ const fetchRandomSongs = () => {
   return async (dispatch) => {
     if (videosRemaining() <= BATCH_SIZE / 2) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API}/v1/songs`);
+        const url = `${process.env.REACT_APP_API}/v1/songs`;
+        const response = await fetch(url);
         const data = await response.json();
         const songs = data.songs.shuffle();
         dispatch(extendQueue(songs));
@@ -69,7 +70,8 @@ export const fetchQueue = (artistId = null, songId = null) => {
     if (artistId !== null && songId !== null) {
       dispatch(clearQueue());
       try {
-        const response = await fetch(`${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`);
+        const url = `${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}`;
+        const response = await fetch(url);
         const data = await response.json();
         dispatch(extendQueue(data.songs));
       } catch(e) {
