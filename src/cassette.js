@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  Precache.js                                                              |
+ |  cassette.js                                                              |
  |                                                                           |
  |  Copyright © 2017-2021, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,40 +18,12 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React, { useEffect } from 'react';
+console.log(`
+ _________
+|   ___   |
+|  o___o  |
+|__/___\\__|
 
-const querystring = require('querystring');
-
-async function getQueries() {
-  try {
-    const url = `${process.env.REACT_APP_API}/v1/queries`;
-    const response = await fetch(url);
-    const data = await response.json();
-    cacheQueries(data.queries);
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-async function cacheQueries(queries) {
-  if (queries.length) {
-    const query = queries.shift();
-    const urlQueryString = querystring.stringify({ q: query });
-    const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
-    try {
-      const response = await fetch(url);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      cacheQueries(queries);
-    }
-  }
-}
-
-const Precache = React.memo(function Precache() {
-  useEffect(getQueries, []);
-
-  return null;
-});
-
-export default Precache;
+Using Spool at work?  Work at Spool.
+https://spool.video/jobs
+`);

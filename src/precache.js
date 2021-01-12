@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  precache.js                                                              |
  |                                                                           |
  |  Copyright © 2017-2021, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,31 +18,32 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+const querystring = require('querystring');
 
-import '../cassette';
-import '../precache';
-import store from '../store';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
+async function getQueries() {
+  const url = `${process.env.REACT_APP_API}/v1/queries`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    cacheQueries(data.queries);
+  } catch (e) {
+    console.error(e);
+  }
+}
 
+async function cacheQueries(queries) {
+  if (queries.length) {
+    const query = queries.shift();
+    const urlQueryString = querystring.stringify({ q: query });
+    const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
+    try {
+      const response = await fetch(url);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      cacheQueries(queries);
+    }
+  }
+}
 
-const App = React.memo(function App() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/:artistId/:songId" component={Home} />
-          <Route exact path="/wtf" component={About} />
-        </Switch>
-        <Route component={Logo} />
-      </Router>
-    </Provider>
-  );
-});
-
-export default App;
+getQueries();
