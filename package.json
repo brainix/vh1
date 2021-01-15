@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@sentry/react": "^5.29.2",
-    "@sentry/tracing": "^5.29.2",
-    "npm": "^7.4.0",
+    "@sentry/react": "^5.30.0",
+    "@sentry/tracing": "^5.30.0",
+    "npm": "^7.4.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -21,8 +21,8 @@
     "eject": "react-scripts eject"
   },
   "engines": {
-    "node": "15.5.1",
-    "npm": "7.4.0"
+    "node": "15.6.0",
+    "npm": "7.4.1"
   },
   "browserslist": [
     ">0.2%",
