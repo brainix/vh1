@@ -33,7 +33,10 @@ String.prototype.htmlToText = function () {
   return this.replace(/<[^>]*\/?>/g, '')    // HTML open and self-closing tags
     .replace(/<\/[a-z]*>/ig, '')            // HTML close tags
     // eslint-disable-next-line
-    .replace(/\&mdash;/ig, '-');
+    .replace(/\&mdash;/ig, '-')
+    .replace(/\&[lr]squo;/ig, "'")
+    .replace(/\&[lr]dquo;/ig, '"')
+    .replace(/\&hellip;/ig, '...');
 };
 
 String.prototype.textToHtml = function () {

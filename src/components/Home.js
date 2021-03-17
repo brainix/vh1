@@ -24,11 +24,9 @@ import Player from './Player';
 import Search from './Search';
 
 const Home = React.memo(function Home(props) {
-  let artistId, songId;
+  let [artistId, songId] = [null, null];
   if (props.match) {
     ({ artistId, songId } = props.match.params);
-  } else {
-    [artistId, songId] = [null, null];
   }
 
   return (

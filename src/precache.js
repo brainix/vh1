@@ -32,17 +32,19 @@ async function getQueries() {
 }
 
 async function cacheQueries(queries) {
-  if (queries.length) {
-    const query = queries.shift();
-    const urlQueryString = querystring.stringify({ q: query });
-    const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
-    try {
-      const response = await fetch(url);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      cacheQueries(queries);
-    }
+  if (!queries.length) {
+    return;
+  }
+
+  const query = queries.shift();
+  const urlQueryString = querystring.stringify({ q: query });
+  const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
+  try {
+    await fetch(url);
+  } catch (e) {
+    console.error(e);
+  } finally {
+    cacheQueries(queries);
   }
 }
 

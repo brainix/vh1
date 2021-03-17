@@ -89,7 +89,7 @@ const Buffer = React.memo(function Buffer(props) {
     // eslint-disable-next-line
   }, [artistId, songId]);
 
-  let states;
+  let states = ['playing', 'buffering'];
   if (
     props.player.index === null
     || props.player.index > props.player.queue.length - 1
@@ -100,8 +100,6 @@ const Buffer = React.memo(function Buffer(props) {
     || props.state === 'background'
   ) {
     states = [props.state];
-  } else {
-    states = ['playing', 'buffering'];
   }
 
   const videos = [];

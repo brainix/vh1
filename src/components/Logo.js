@@ -24,11 +24,9 @@ import src from './logo.png';
 import './Logo.css';
 
 const Logo = React.memo(function Logo(props) {
-  let linkTo, alt;
+  let [linkTo, alt] = ['/wtf', 'WTF?'];
   if (props.location.pathname === '/wtf') {
     [linkTo, alt] = ['/', 'Home'];
-  } else {
-    [linkTo, alt] = ['/wtf', 'WTF?'];
   }
 
   return (
