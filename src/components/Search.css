@@ -19,7 +19,7 @@
 \*---------------------------------------------------------------------------*/
 
 .Search {
-  position: relative;
+  position: fixed;
   margin: 24px;
   width: 20em;
   font-weight: 300;
