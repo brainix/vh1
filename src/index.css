@@ -38,6 +38,11 @@
   src: local("Lato Bold"), local("Lato-Bold"), url("https://themes.googleusercontent.com/static/fonts/lato/v7/DvlFBScY1r-FMtZSYIYoYw.ttf") format("truetype");
 }
 
+html, body {
+  max-width: 100vh;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   border: 0;
