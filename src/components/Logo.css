@@ -26,5 +26,11 @@
 }
 
 .Logo img {
-  height: 72px;
+  height: 54px;
+}
+
+@media (min-width: 992px) {
+  .Logo img {
+    height: 72px;
+  }
 }

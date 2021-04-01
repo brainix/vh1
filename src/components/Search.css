@@ -40,10 +40,16 @@
   background: transparent;
   color: white;
   line-height: 1.25;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   text-transform: lowercase;
   transition: all 0.2s ease 0s;
+}
+
+@media (min-width: 992px) {
+  .Search input {
+      font-size: 24px;
+  }
 }
 
 .Search input::-webkit-input-placeholder {

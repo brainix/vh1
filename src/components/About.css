@@ -24,28 +24,48 @@
 }
 
 .About h1, .About h2 {
-  margin: 0 0 48px;
+  margin: 0 0 36px;
   width: 768px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 700;
   text-transform: uppercase;
 }
 
+@media (min-width: 992px) {
+  .About h1, .About h2 {
+    margin-bottom: 48px;
+    font-size: 64px;
+  }
+}
+
 .About h2 {
-  margin-bottom: 24px;
-  font-size: 32px;
+  margin-bottom: 18px;
+  font-size: 24px;
   font-weight: 400;
   text-transform: none;
 }
 
+@media (min-width: 992px) {
+  .About h2 {
+    margin-bottom: 24px;
+    font-size: 32px;
+  }
+}
+
 .About p {
-  margin: 0 0 48px;
+  margin: 0 0 36px;
   max-width: 640px;
   line-height: 1.5;
   text-transform: none;
+}
+
+@media (min-width: 992px) {
+  .About p {
+    margin-bottom: 48px;
+  }
 }
 
 .About p:last-of-type {

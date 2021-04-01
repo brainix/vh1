@@ -44,8 +44,14 @@ body {
   padding: 0;
   background: black;
   color: white;
-  font: 24px "Lato", sans-serif;
+  font: 18px "Lato", sans-serif;
   text-transform: lowercase;
+}
+
+@media (min-width: 992px) {
+  body {
+    font-size: 24px;
+  }
 }
 
 a {
