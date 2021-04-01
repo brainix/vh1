@@ -55,6 +55,14 @@
   line-height: 1.25;
   opacity: 0.0;
   transition: all 0.2s ease 0s;
+
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .Player figure {
+    display: block;
+  }
 }
 
 .Player figure.Playing {
