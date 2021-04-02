@@ -57,7 +57,7 @@
 
 .About p {
   margin: 0 0 36px;
-  max-width: 640px;
+  max-width: 480px;
   line-height: 1.5;
   text-transform: none;
 }
@@ -65,6 +65,7 @@
 @media (min-width: 992px) {
   .About p {
     margin-bottom: 48px;
+    max-width: 640px;
   }
 }
 

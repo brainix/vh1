@@ -24,13 +24,13 @@ import src from './logo.png';
 import './Logo.css';
 
 const Logo = React.memo(function Logo(props) {
-  let [linkTo, alt] = ['/wtf', 'WTF?'];
+  let [className, linkTo, alt] = ['Logo WTF', '/wtf', 'WTF?'];
   if (props.location.pathname === '/wtf') {
-    [linkTo, alt] = ['/', 'Home'];
+    [className, linkTo, alt] = ['Logo Home', '/', 'Home'];
   }
 
   return (
-    <Link className="Logo" to={linkTo}>
+    <Link className={className} to={linkTo}>
       <img src={src} alt={alt} title={alt} />
     </Link>
   );

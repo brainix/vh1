@@ -19,10 +19,22 @@
 \*---------------------------------------------------------------------------*/
 
 .Logo {
+  position: absolute;
+  margin: 24px;
+}
+
+.Logo.WTF {
   position: fixed;
   right: 0;
   bottom: 0;
-  margin: 24px;
+}
+
+@media (min-width: 992px) {
+  .Logo.Home {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .Logo img {
