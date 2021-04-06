@@ -107,6 +107,17 @@ const Input = React.memo(function Input(props) {
     notPlaying.forEach((element) => {
       element.classList.remove('NotPlaying');
     });
+
+    // If the user is on an iPhone, issues a search, then taps "Done" on the
+    // keyboard, we need the following line to clear the search query and
+    // results.  We need to use setTimeout() with a delay of 0 ms in order to
+    // clear search during the next event cycle; without this, taps on search
+    // results don't register.
+    //
+    // Sources:
+    //    1. https://medium.com/@jessebeach/dealing-with-focus-and-blur-in-a-composite-widget-in-react-90d3c3b49a9b
+    //    2. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout
+    setTimeout(props.clearSearch, 0);
   }, []);
 
   const executeSearch = useCallback((eventObject) => {
@@ -136,6 +147,7 @@ mapStateToProps = (state) => ({
 
 mapDispatchToProps = (dispatch) => ({
   executeSearch: (query) => dispatch(executeSearch(query)),
+  clearSearch: () => dispatch(clearSearch()),
 });
 
 const ConnectedInput = connect(mapStateToProps, mapDispatchToProps)(Input);
