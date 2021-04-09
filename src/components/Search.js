@@ -25,6 +25,7 @@ import '../requestAnimationFrame';
 import '../monkey';
 import { executeSearch, setSelected, clearSearch } from '../actions/search';
 import './Search.css';
+import { iOS } from '../utils';
 
 const Search = React.memo(function Search(props) {
   useEffect(() => {
@@ -62,20 +63,6 @@ let mapDispatchToProps = (dispatch) => ({
 });
 
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
-
-function iOS() {
-  // https://stackoverflow.com/a/9039885
-  return [
-    'iPad Simulator',
-    'iPhone Simulator',
-    'iPod Simulator',
-    'iPad',
-    'iPhone',
-    'iPod'
-  ].includes(navigator.platform)
-  // iPad on iOS 13 detection
-  || (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
-}
 
 const Input = React.memo(function Input(props) {
   useEffect(() => {
