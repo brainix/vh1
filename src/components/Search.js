@@ -63,6 +63,20 @@ let mapDispatchToProps = (dispatch) => ({
 
 const ConnectedSearch = connect(mapStateToProps, mapDispatchToProps)(Search);
 
+function iOS() {
+  // https://stackoverflow.com/a/9039885
+  return [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ].includes(navigator.platform)
+  // iPad on iOS 13 detection
+  || (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+}
+
 const Input = React.memo(function Input(props) {
   useEffect(() => {
     document.addEventListener('keypress', focusSearch);
@@ -117,7 +131,9 @@ const Input = React.memo(function Input(props) {
     // Sources:
     //    1. https://medium.com/@jessebeach/dealing-with-focus-and-blur-in-a-composite-widget-in-react-90d3c3b49a9b
     //    2. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout
-    setTimeout(props.clearSearch, 0);
+    if (iOS()) {
+      setTimeout(props.clearSearch, 0);
+    }
   }, []);
 
   const executeSearch = useCallback((eventObject) => {
