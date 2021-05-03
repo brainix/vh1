@@ -49,7 +49,7 @@ const Search = React.memo(function Search(props) {
       <fieldset>
         <ConnectedInput />
       </fieldset>
-      <ConnectedResults history={props.history} />
+      <ConnectedResults />
     </form>
   );
 });
