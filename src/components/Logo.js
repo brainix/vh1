@@ -31,7 +31,7 @@ const Logo = React.memo(function Logo(props) {
 
   return (
     <Link className={className} to={linkTo}>
-      <img src={src} alt={alt} title={alt} />
+      <img src={src} alt={alt} title={alt} loading="lazy" />
     </Link>
   );
 });
