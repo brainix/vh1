@@ -8,10 +8,15 @@
 
 
 install upgrade: formulae := {node,heroku}
+heroku: app ?= vh1
 
 
 
-install:
+.PHONY: install
+install: init heroku
+
+.PHONY: init
+init:
 	-xcode-select --install
 	brew analytics off
 	brew analytics regenerate-uuid
@@ -20,6 +25,7 @@ install:
 	npm install -g create-react-app
 	npm install
 
+.PHONY: upgrade
 upgrade:
 	brew update
 	-brew upgrade $(formulae)
@@ -34,3 +40,8 @@ upgrade:
 	-npm outdated
 	git status
 	git diff
+
+.PHONY: heroku
+heroku:
+	heroku login
+	heroku git:remote -a $(app)
