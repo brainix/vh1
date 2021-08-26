@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------*\
- |  App.js                                                                   |
+ |  NotFound.js                                                              |
  |                                                                           |
  |  Copyright © 2017-2021, Rajiv Bakulesh Shah, original author.             |
  |                                                                           |
@@ -18,33 +18,24 @@
  |          <http://www.gnu.org/licenses/>                                   |
 \*---------------------------------------------------------------------------*/
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import Player from './Player';
+import './About.css';
 
-import '../cassette';
-import '../precache';
-import store from '../store';
-import About from './About';
-import Home from './Home';
-import Logo from './Logo';
-import NotFound from './NotFound';
+const NotFound = React.memo(function NotFound(props) {
+  useEffect(() => {
+    document.title = 'Spool - 404 - Not Found';
+  });
 
-
-const App = React.memo(function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/:artistId/:songId" component={Home} />
-          <Route exact path="/wtf" component={About} />
-          <Route component={NotFound} />
-        </Switch>
-        <Route component={Logo} />
-      </Router>
-    </Provider>
+    <>
+      <Player state='background' history={props.history} />
+      <section className="About">
+        <h1>404 &mdash; Not Found</h1>
+      </section>
+    </>
   );
 });
 
-export default App;
+export default withRouter(NotFound);
