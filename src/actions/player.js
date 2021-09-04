@@ -34,7 +34,7 @@ const videosRemaining = () => {
     index = -1;
   }
   return queueLength - index - 1;
-}
+};
 
 export const nextVideo = () => {
   return (dispatch) => {
@@ -43,7 +43,7 @@ export const nextVideo = () => {
       dispatch(fetchRandomSongs());
     }
   };
-}
+};
 
 const fetchRandomSongs = () => {
   return async (dispatch) => {
@@ -62,7 +62,7 @@ const fetchRandomSongs = () => {
       }
     }
   };
-}
+};
 
 export const fetchQueue = (artistId = null, songId = null) => {
   // TODO: Throw an error if artistId is null but songId isn't, or vice versa.
@@ -80,4 +80,4 @@ export const fetchQueue = (artistId = null, songId = null) => {
     }
     dispatch(fetchRandomSongs());
   };
-}
+};
