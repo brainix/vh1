@@ -27,6 +27,12 @@ const showResults = (results) => ({ type: 'search/showResults', results });
 export const setSelected = (index) => ({ type: 'search/setSelected', index });
 export const clearSearch = () => ({ type: 'search/clearSearch' });
 
+const EASTER_EGGS = {
+  porn: [
+    'https://www.pornhub.com/',
+  ],
+};
+
 export const executeSearch = (query) => {
   return async (dispatch) => {
     if (!query) {
@@ -35,6 +41,13 @@ export const executeSearch = (query) => {
     }
 
     dispatch(setQuery(query));
+
+    const normalizedQuery = query.normalize();
+    if (normalizedQuery in EASTER_EGGS) {
+      const webpage = EASTER_EGGS[normalizedQuery].choice();
+      window.location.href = webpage;
+    }
+
     try {
       const urlQueryString = querystring.stringify({ q: query });
       const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
@@ -51,4 +64,4 @@ export const executeSearch = (query) => {
       console.error(e);
     }
   };
-}
+};

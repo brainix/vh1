@@ -29,6 +29,11 @@ String.prototype.trimAll = function () {
     .replace(/\s+/g, ' ');
 };
 
+String.prototype.normalize = function () {
+  return this.trimAll()
+    .toLowerCase();
+};
+
 String.prototype.htmlToText = function () {
   return this.replace(/<[^>]*\/?>/g, '')    // HTML open and self-closing tags
     .replace(/<\/[a-z]*>/ig, '')            // HTML close tags
