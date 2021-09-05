@@ -37,7 +37,7 @@ const NotFound = React.memo(function NotFound(props) {
           Once upon a midnight dreary, while I porn surfed, weak and weary,<br />
           Over many a strange and spurious website of &lsquo;hot chicks galore&rsquo;&mdash;<br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;While I clicked my fav&rsquo;rite bookmark, suddenly there came a warning,<br />
-          And my heart was filled with mourning, mourning for nudes I adore.<br />
+          And my heart was filled with mourning, mourning for my dear amour.<br />
           &ldquo;&rsquo;Tis not possible;&rdquo; I muttered, &ldquo;give me back my free hardcore!&rdquo;&mdash;<br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quoth the Server &ldquo;<a href='http://bash.org/?120296'>404</a>.&rdquo;
         </p>
