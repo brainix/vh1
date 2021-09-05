@@ -43,8 +43,10 @@ const About = React.memo(function About(props) {
 
         <h2>Just &hellip; Why?</h2>
         <p>
-          I want to build something frivolous, but in a particular way.
-          Inexplicable like <small>MTV</small> or Snapchat.
+          I want to build something frivolous, but I want it to be worthless in
+          a&nbsp;
+          <a href='https://www.producthunt.com/posts/spool-tv'>particular way</a>.
+          Inexplicable like <small>MTV</small> or iCarly.
         </p>
 
         <h2>How can I contact you?</h2>
