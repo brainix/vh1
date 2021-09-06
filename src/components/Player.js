@@ -157,10 +157,10 @@ const Video = React.memo(function Video(props) {
         className={className}
         src={props.video.mp4_url}
         preload="auto"
-        loop
+        loop={true}
         autoPlay={props.state === 'buffering' ? null : 'autoplay'}
         muted={props.state !== 'playing'}
-        playsInline
+        playsInline={true}
         onMouseDown={nextVideo}
       />
       <Credits video={props.video} state={props.state} />
@@ -195,7 +195,10 @@ const Credits = React.memo(function Credits(props) {
       {cleanAlbum &&
         <>
           <br />
-          <span dangerouslySetInnerHTML={{ __html: cleanAlbum }} title={album} />
+          <span
+            dangerouslySetInnerHTML={{ __html: cleanAlbum }}
+            title={album}
+          />
         </>
       }
     </figure>
