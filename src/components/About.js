@@ -46,7 +46,7 @@ const About = React.memo(function About(props) {
           I want to build something frivolous, but I want it to be worthless in
           a&nbsp;
           <a href='https://www.producthunt.com/posts/spool-tv'>particular way</a>.
-          Inexplicable like <small>MTV</small> or iCarly.
+          Inexplicable like <small>MTV,</small> <small>IRC,</small> or iCarly.
         </p>
 
         <h2>How can I contact you?</h2>
