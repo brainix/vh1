@@ -31,6 +31,9 @@ const EASTER_EGGS = {
   porn: [
     'https://www.pornhub.com/',
   ],
+  rickroll: [
+    'https://spool.video/rick-astley/never-gonna-give-you-up',
+  ],
 };
 
 export const executeSearch = (query) => {
