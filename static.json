@@ -4,6 +4,7 @@
   "error_page": "index.html",
   "headers": {
     "/**": {
+      "X-LOLWUT": "curl api.spool.video/v1/lolwut/5",
       "X-Plain-Like-Im-Five": "Just music videos.",
       "X-SQL-Injection": "1; DROP TABLE users--",
       "X-Wing": "Red Five"
