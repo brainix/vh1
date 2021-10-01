@@ -1,5 +1,12 @@
 {
   "https_only": true,
+  "headers": {
+    "/**": {
+      "X-Plain-Like-Im-Five": "Just music videos.",
+      "X-SQL-Injection": "1; DROP TABLE users--",
+      "X-Wing": "Red Five"
+    }
+  },
   "root": "build/",
   "error_page": "index.html"
 }
