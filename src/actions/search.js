@@ -2,11 +2,12 @@
  |  search.js                                                                |
 \*---------------------------------------------------------------------------*/
 
+import { v4 as uuidv4 } from 'uuid';
 import store from '../store';
 
 const querystring = require('querystring');
 
-const setQuery = (query) => ({ type: 'search/setQuery', query });
+const setQuery = (query, uuid) => ({ type: 'search/setQuery', query, uuid });
 const showResults = (results) => ({ type: 'search/showResults', results });
 export const setSelected = (index) => ({ type: 'search/setSelected', index });
 export const clearSearch = () => ({ type: 'search/clearSearch' });
@@ -26,8 +27,8 @@ export const executeSearch = (query) => {
       dispatch(clearSearch());
       return;
     }
-
-    dispatch(setQuery(query));
+    const uuid = uuidv4();
+    dispatch(setQuery(query, uuid));
 
     const normalizedQuery = query.normalize();
     if (normalizedQuery in EASTER_EGGS) {
@@ -36,19 +37,26 @@ export const executeSearch = (query) => {
     }
 
     try {
-      const urlQueryString = querystring.stringify({ q: query });
+      const urlQueryString = querystring.stringify({ q: query, uuid });
       const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
       const response = await fetch(url);
       const data = await response.json();
-      if (data.metadata.q === store.getState().search.query) {
+      if (data.metadata.uuid === store.getState().search.uuid) {
         dispatch(showResults(data.songs));
-
-        const [method, body] = ['POST', new FormData()];
-        body.append('q', query);
-        await fetch(`${process.env.REACT_APP_API}/v1/queries`, { method, body });
+        recordQuery(query);
       }
     } catch(e) {
       console.error(e);
     }
   };
+};
+
+const recordQuery = (query) => {
+  const uuid = uuidv4();
+  const urlQueryString = querystring.stringify({ uuid });
+  const url = `${process.env.REACT_APP_API}/v1/queries?${urlQueryString}`;
+  const [method, body] = ['POST', new FormData()];
+  body.append('q', query);
+  fetch(url, { method, body })
+    .catch(console.error);
 };

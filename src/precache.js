@@ -2,10 +2,14 @@
  |  precache.js                                                              |
 \*---------------------------------------------------------------------------*/
 
+import { v4 as uuidv4 } from 'uuid';
+
 const querystring = require('querystring');
 
 async function getQueries() {
-  const url = `${process.env.REACT_APP_API}/v1/queries`;
+  const uuid = uuidv4();
+  const urlQueryString = querystring.stringify({ uuid });
+  const url = `${process.env.REACT_APP_API}/v1/queries?${urlQueryString}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -21,7 +25,8 @@ async function cacheQueries(queries) {
   }
 
   const query = queries.shift();
-  const urlQueryString = querystring.stringify({ q: query });
+  const uuid = uuidv4();
+  const urlQueryString = querystring.stringify({ q: query, uuid });
   const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
   try {
     await fetch(url);
