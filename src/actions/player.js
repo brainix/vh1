@@ -5,8 +5,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import store from '../store';
 
-const querystring = require('querystring');
-
 const BATCH_SIZE = 60;
 
 const clearQueue = () => ({ type: 'player/clearQueue' });
@@ -37,7 +35,7 @@ const fetchRandomSongs = () => {
     if (videosRemaining() <= BATCH_SIZE / 2) {
       try {
         const uuid = uuidv4();
-        const urlQueryString = querystring.stringify({ uuid });
+        const urlQueryString = new URLSearchParams(`uuid=${uuid}`);
         const url = `${process.env.REACT_APP_API}/v1/songs?${urlQueryString}`;
         const response = await fetch(url);
         const data = await response.json();
@@ -60,7 +58,7 @@ export const fetchQueue = (artistId = null, songId = null) => {
       dispatch(clearQueue());
       try {
         const uuid = uuidv4();
-        const urlQueryString = querystring.stringify({ uuid });
+        const urlQueryString = new URLSearchParams(`uuid=${uuid}`);
         const url = `${process.env.REACT_APP_API}/v1/artists/${artistId}/songs/${songId}?${urlQueryString}`;
         const response = await fetch(url);
         const data = await response.json();
