@@ -34,17 +34,17 @@ export const executeSearch = (query) => {
       window.location.href = webpage;
     }
 
-    try {
-      const urlQueryString = new URLSearchParams(`q=${query}&uuid=${uuid}`);
-      const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.metadata.uuid === store.getState().search.uuid) {
-        dispatch(showResults(data.songs));
-        recordQuery(query);
-      }
-    } catch(e) {
-      console.error(e);
+    const urlQueryString = new URLSearchParams(`q=${query}&uuid=${uuid}`);
+    const url = `${process.env.REACT_APP_API}/v1/songs/search?${urlQueryString}`;
+    const response = await fetch(url);
+    if (response.status !== 200) {
+      console.error(`GET ${url} returned ${response.status} status code`)
+      return;
+    }
+    const data = await response.json();
+    if (data.metadata.uuid === store.getState().search.uuid) {
+      dispatch(showResults(data.songs));
+      recordQuery(query);
     }
   };
 };
