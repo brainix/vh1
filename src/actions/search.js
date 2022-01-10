@@ -39,6 +39,7 @@ export const executeSearch = (query) => {
     const response = await fetch(url);
     if (response.status !== 200) {
       console.error(`GET ${url} returned ${response.status} status code`)
+      dispatch(showResults([]));
       return;
     }
     const data = await response.json();
