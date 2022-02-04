@@ -17,6 +17,9 @@ const EASTER_EGGS = {
   rickroll: [
     'https://spool.video/rick-astley/never-gonna-give-you-up',
   ],
+  wordle: [
+    'https://powerlanguage.co.uk/wordle/',
+  ],
 };
 
 export const executeSearch = (query) => {
