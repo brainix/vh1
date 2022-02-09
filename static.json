@@ -4,6 +4,8 @@
   "error_page": "index.html",
   "headers": {
     "/**": {
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
       "X-LOLWUT": "curl api.spool.video/v1/lolwut/5",
       "X-Plain-Like-Im-Five": "Just music videos.",
       "X-SQL-Injection": "1; DROP TABLE users--",
